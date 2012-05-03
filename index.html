@@ -52,15 +52,15 @@
           strokeWidth: 1
         });
         
-        var grd2 = boxLayer.getContext().createLinearGradient(0, 0, 0, 20);
+        var grd2 = boxLayer.getContext().createLinearGradient(0, 0, 0, 50);
         grd2.addColorStop(0, "#3c3b37");
-        grd2.addColorStop(0.9, "#595854");
+        grd2.addColorStop(0.98, "#595854");
         grd2.addColorStop(1, "#6d6b68");
 
         var btnContainer = new Kinetic.Rect({
             x: rectX + 5,
             y: rectY + 5,
-            width: 60,
+            width: 64,
             height: 20,
             cornerRadius: 10,
             fill: grd2
@@ -76,24 +76,80 @@
             y: rectY + 15,
             radius: 9,
             fill: grd3,
-            stroke: "#595854",
+            stroke: "#393834",
             strokeWidth: 1
         });
 
+        var closeIcon = new Kinetic.Group();
+        
+        var closeIconDown = new Kinetic.Line({
+            points: [{x:rectX+13,y:rectY+11},{x:rectX+21,y:rectY+19}],
+            stroke: "#595854",
+            strokeWidth: 1,
+            lineCap: 'round',
+            lineJoin: 'round'
+        });
 
-        var btnResize = new Kinetic.Circle({
+        var closeIconUp = new Kinetic.Line({
+            points: [{x:rectX+13,y:rectY+19},{x:rectX+21,y:rectY+11}],
+            stroke: "#595854",
+            strokeWidth: 1,
+            lineCap: 'round',
+            lineJoin: 'round'
+        });
+
+        closeIcon.add(closeIconDown);
+        closeIcon.add(closeIconUp);
+
+        var grd4 = boxLayer.getContext().createLinearGradient(0, 0, 0, 20);
+        grd4.addColorStop(0, "#6d6b68");
+        grd4.addColorStop(0.05, "#595854");
+        grd4.addColorStop(1, "#5a5954");
+
+        var btnMinimize = new Kinetic.Circle({
             x: rectX + 37,
             y: rectY + 15,
             radius: 9,
-            fill: grd,
-            stroke: "#505854",
+            fill: grd4,
+            stroke: "#393834",
             strokeWidth: 1
         });
 
+        var minIcon = new Kinetic.Line({
+            points: [{x:rectX+32,y:rectY+15},{x:rectX+42,y:rectY+15}],
+            stroke: "#393834",
+            strokeWidth: 1,
+            lineCap: 'round',
+            lineJoin: 'round'
+            
+        });
+        
+        var btnResize = new Kinetic.Circle({
+            x: rectX + 57,
+            y: rectY + 15,
+            radius: 9,
+            fill: grd4,
+            stroke: "#393834",
+            strokeWidth: 1
+        });
+
+        var rectIcon = new Kinetic.Rect({
+            x: rectX + 53,
+            y: rectY + 11,
+            width: 8,
+            height: 8,
+            stroke: "#393834",
+            strokeWidth: 1
+        });
+        
         xWindow.add(box);
         xWindow.add(btnContainer);
         xWindow.add(btnCloseBg);
+        xWindow.add(closeIcon);
+        xWindow.add(btnMinimize);
+        xWindow.add(minIcon);
         xWindow.add(btnResize);
+        xWindow.add(rectIcon);
 
         // write out drag and drop events
         xWindow.on("dragstart", function() {
