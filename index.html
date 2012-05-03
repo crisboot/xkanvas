@@ -57,6 +57,21 @@
         grd2.addColorStop(0.98, "#595854");
         grd2.addColorStop(1, "#6d6b68");
 
+
+        var txtTitle = new Kinetic.Text({
+            x: rectX + 70,
+            y: rectY + 15,
+            text: "crisboot@xkanvas: ~$",
+            fontSize: 14,
+            fontFamily: "Calibri",
+            textFill: "#d1d1d1",
+            padding: 10,
+            align: "leftr",
+            verticalAlign: "middle",
+            fontStyle: "italic"
+        });
+        
+
         var btnContainer = new Kinetic.Rect({
             x: rectX + 5,
             y: rectY + 5,
@@ -143,6 +158,7 @@
         });
         
         xWindow.add(box);
+        xWindow.add(txtTitle);
         xWindow.add(btnContainer);
         xWindow.add(btnCloseBg);
         xWindow.add(closeIcon);
