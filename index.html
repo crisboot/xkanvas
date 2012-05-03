@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas {
+        border: 1px solid #9C9898;
+      }
+    </style>
+    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.4.js"></script>
+    <script>
+      function writeMessage(messageLayer, message) {
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = "18pt Calibri";
+        context.fillStyle = "black";
+        context.fillText(message, 10, 25);
+      }
+
+      window.onload = function() {
+        var stage = new Kinetic.Stage({
+          container: "container",
+          width: window.screen.width || 578,
+          height: window.screen.height || 200
+        });
+        var boxLayer = new Kinetic.Layer();
+        var messageLayer = new Kinetic.Layer();
+        var rectX = stage.getWidth() / 2 - 500;
+        var rectY = stage.getHeight() / 2 - 250;
+        var xWindow = new Kinetic.Group({
+          draggable: true
+        });
+        //console.dir(boxLayer)
+        // add linear gradient
+        var grd = boxLayer.getContext().createLinearGradient(0, 0, 0, 200);
+        // light blue
+        grd.addColorStop(0, "#6d6b68");
+        grd.addColorStop(0.03, "#595854");
+        grd.addColorStop(0.1, "#3c3b37");
+
+        var box = new Kinetic.Rect({
+          x: rectX,
+          y: rectY,
+          width: 550,
+          height: 350,
+          cornerRadius: 5,
+          fill: grd,
+          stroke: "black",
+          strokeWidth: 1
+        });
+        
+        var grd2 = boxLayer.getContext().createLinearGradient(0, 0, 0, 20);
+        grd2.addColorStop(0, "#3c3b37");
+        grd2.addColorStop(0.9, "#595854");
+        grd2.addColorStop(1, "#6d6b68");
+
+        var btnContainer = new Kinetic.Rect({
+            x: rectX + 5,
+            y: rectY + 5,
+            width: 60,
+            height: 20,
+            cornerRadius: 10,
+            fill: grd2
+        });
+
+        var grd3 = boxLayer.getContext().createLinearGradient(0, 0, 0, 20);
+        grd3.addColorStop(0, "#f78d66");
+        grd3.addColorStop(0.05, "#e66228");
+        grd3.addColorStop(1, "#393834");
+
+        var btnCloseBg = new Kinetic.Circle({
+            x: rectX + 17,
+            y: rectY + 15,
+            radius: 9,
+            fill: grd3,
+            stroke: "#595854",
+            strokeWidth: 1
+        });
+
+
+        var btnResize = new Kinetic.Circle({
+            x: rectX + 37,
+            y: rectY + 15,
+            radius: 9,
+            fill: grd,
+            stroke: "#505854",
+            strokeWidth: 1
+        });
+
+        xWindow.add(box);
+        xWindow.add(btnContainer);
+        xWindow.add(btnCloseBg);
+        xWindow.add(btnResize);
+
+        // write out drag and drop events
+        xWindow.on("dragstart", function() {
+          writeMessage(messageLayer, "dragstart");
+        });
+        xWindow.on("dragend", function() {
+          writeMessage(messageLayer, "dragend");
+        });
+
+        boxLayer.add(xWindow);
+
+        stage.add(messageLayer);
+        stage.add(boxLayer);
+      };
+
+    </script>
+  </head>
+  <body onmousedown="return false;">
+    <div id="container"></div>
+  </body>
+</html>
