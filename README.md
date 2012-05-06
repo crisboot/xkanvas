@@ -7,5 +7,8 @@ For demonstration purposes visit http://cortezcristian.com.ar/xkanvas/
 
 #How to install
 Run 'bundle install' to install the RubyGems dependencies. 
-Then...
+Then you can compile the source using Thor, i.e.:
+  thor list (for listing the tasks)
+  thor help build:development (to get help about a particualr task)
+  thor build:development 1.0 (Sample task to compile the source file, "1.0" is the Version parameter)
 
