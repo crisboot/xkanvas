@@ -11,8 +11,8 @@
 * @license Released under GPL v2 License - http://www.gnu.org/licenses/gpl-2.0.html
 * @author Cristian Ariel Cortez  
 * @copyright (c) 2012 - 2014 Cristian Ariel Cortez - cortez[dot]cristian[at]gmail[dot]com - http://cortezcristian.com.ar/
-* @date date
-* 1.0 version
+* @date May 06 2012
+* @version 1.0
 * @requires KineticJS v3.9.4 or above - http://www.kineticjs.com/
 *
 * This program is free software; you can redistribute it and/or
