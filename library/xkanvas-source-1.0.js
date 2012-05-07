@@ -30,9 +30,65 @@
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */                                    
 
+/**
+ * xKanvas Global Namespace
+ * @namespace
+ */
+var xk = {};
+/**
+ * xKanvas Global Namespace
+ * @property {String} Version
+ */
+xk.ver = '1.0';
+
+xk.extend = function(obj1, obj2) {
+        for(var key in obj2.prototype) {
+            console.log(key)
+            if(obj2.prototype.hasOwnProperty(key) && obj1.prototype[key] === undefined) {
+                obj1.prototype[key] = obj2.prototype[key];
+            }
+        }
+    }; 
+
+/**
+ * xKanvas Base Object
+ * @class Abstract Base Object Class
+ */
+xk.obj = function(o){
+    this.o = o || {};
+};
+xk.obj.prototype = {
+    clickeable: true,
+    onClick: function(){
+        throw new Error('Unsupported operation on an abstract class');
+    },
+    onMouseover: function(){
+        document.body.style.cursor = "pointer";
+    }
+}
+
+/**
+ * xKanvas Base Container
+ * @property {Object} Base Container
+ */
+xk.con = {
+    
+}
 
 
+/**
+ * xKanvas Button
+ * @class Button Class
+ * @extends Object Class
+ */
+xk.btn = function(o){
+    xk.obj.call(this,o);
+};
 
+xk.extend(xk.btn, xk.obj);
 
+xk.btn.prototype.onClick = function(){
+        alert("Clicked");
+};
 
 

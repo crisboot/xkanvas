@@ -13,7 +13,7 @@ class Build < Thor
     desc "development", "Merge javascript files from ./src directory into ./library/xkanvas-souce-VERSION.js"
     def development(version)
         version ||= "1.0"
-        fileName = "library/xkanvas-souce-#{version}.js"
+        fileName = "library/xkanvas-source-#{version}.js"
 
         puts "# Empty folder ./library"
         Dir.foreach("library") do |file|
@@ -38,8 +38,10 @@ class Build < Thor
         content << IO.read(File.expand_path("src/#{file}")) << "\n"
       end
       
-      # Add the version number
-      content.sub!("@version", version)
+      # Add the version number and date
+      content.sub!("XXversionXX", version)
+      content.sub!("'XXversionXX'", "'#{version}'")
+      content.sub!("XXdateXX", date)
       
       return content
     end
