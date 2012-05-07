@@ -37,7 +37,6 @@
 var xk = {};
 /*
  * xKanvas Version
- * @namespace xKanvas
  * @property ver
  * @type string
  */
@@ -87,7 +86,7 @@ xk.obj.prototype = {
  * xKanvas Base Container
  * @class Base Container
  */
-xk.con = = function(o){
+xk.con = function(o){
     this.o = o || {};
 };
     

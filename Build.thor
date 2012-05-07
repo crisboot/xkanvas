@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class Build < Thor
     #list of files to be merged
     FILES = [
@@ -14,6 +16,7 @@ class Build < Thor
     def development(version)
         version ||= "1.0"
         fileName = "library/xkanvas-source-#{version}.js"
+        destTest = "tests/library/xkanvas-source-#{version}.js"
 
         puts "# Empty folder ./library"
         Dir.foreach("library") do |file|
@@ -27,7 +30,27 @@ class Build < Thor
             file.puts concatenate(version)
         end 
         puts "# Success!!! :)"
+        puts "# Source File Created: #{fileName}"
 
+        FileUtils.cp fileName, destTest
+        puts "# Copying to tests environment: #{destTest}"
+
+        includeScript("test.html",fileName,/library.*js/)
+        puts "# Including script into: test.html"
+
+        includeScript("tests/xkanvasTests.html",fileName,/library.*js/)
+        puts "# Including script into: tests/xkanvasTests.html"
+    end
+
+    private
+    def includeScript(file2Mod,scriptName,regex)
+       content = ""
+       content  << IO.read(File.expand_path("#{file2Mod}")) << "\n" 
+       content.sub!(regex, scriptName)
+
+       File.open(file2Mod, "w") do |file|
+           file.puts content
+       end
     end
 
     private
