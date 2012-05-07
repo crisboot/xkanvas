@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns:yui="http://yuilibrary.com/rdf/1.0/yui.rdf#">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>API: xKanvas   xkanvas-source-1.0.js  (YUI Library)</title>
+
+	<link rel="stylesheet" type="text/css" href="assets/reset-fonts-grids-min.css?stamp=1336372606.04" />
+	<link rel="stylesheet" type="text/css" href="assets/api.css?stamp=1336372606.04" />
+
+    <script type="text/javascript" src="assets/api-js?stamp=1336372606.04"></script>
+    <script type="text/javascript" src="assets/ac-js?stamp=1336372606.04"></script>
+</head>
+
+<body id="yahoo-com">
+
+<div id="doc3" class="yui-t2">
+	<div id="hd">
+        <h1><a href="http://cortezcristian.com.ar/xkanvas/" title="xkanvas">xkanvas</a></h1>
+        <h3>xKanvas&nbsp; <span class="subtitle">1.0</span></h3>
+        <a href="./index.html" title="xkanvas">xkanvas</a> 
+            &gt; <a href="./module_xkanvas.html" title="xKanvas">xKanvas</a>
+                
+                 &gt; xkanvas-source-1.0.js (source view) 
+        <form onsubmit="return false">
+            <div id="propertysearch">
+                Search: <input autocomplete="off" id="searchinput" />
+                <div id="searchresults">
+                    &nbsp;
+                </div>
+            </div>
+        </form>
+	</div>
+
+	<div id="bd">
+		<div id="yui-main">
+			<div class="yui-b">
+            <form action="#" name="yui-classopts-form" method="get" id="yui-classopts-form">
+                <fieldset>
+                    <legend>Filters</legend>
+                <span class="classopts"><input type="checkbox" name="show_private" id="show_private" /> <label for="show_private">Show Private</label></span>
+                <span class="classopts"><input type="checkbox" name="show_protected" id="show_protected" /> <label for="show_protected">Show Protected</label></span>
+                <span class="classopts"><input type="checkbox" name="show_deprecated" id="show_deprecated" /> <label for="show_deprecated">Show Deprecated</label></span>
+                </fieldset>
+            </form>
+
+                    <div id="srcout">
+                        <style>
+                            #doc3 .classopts { display:none; }
+                        </style>
+<div class="highlight"><pre><span class="cm">/**     _  __                         </span>
+<span class="cm">* __  _| |/ /__ _ _ ____   ____ _ ___ </span>
+<span class="cm">* \ \/ / &#39; // _` | &#39;_ \ \ / / _` / __|</span>
+<span class="cm">*  &gt;  &lt;| . \ (_| | | | \ V / (_| \__ \</span>
+<span class="cm">* /_/\_\_|\_\__,_|_| |_|\_/ \__,_|___/</span>
+<span class="cm">* </span>
+<span class="cm">* xKanvas Javascript Library </span>
+<span class="cm">*  </span>
+<span class="cm">* @description xKanvas is a set of desktoping widgets running inside a canvas html element</span>
+<span class="cm">* @demo http://cortezcristian.com.ar/xkanvas/</span>
+<span class="cm">* @license Released under GPL v2 License - http://www.gnu.org/licenses/gpl-2.0.html</span>
+<span class="cm">* @author Cristian Ariel Cortez  </span>
+<span class="cm">* @copyright (c) 2012 - 2014 Cristian Ariel Cortez - cortez[dot]cristian[at]gmail[dot]com - http://cortezcristian.com.ar/</span>
+<span class="cm">* @date May 07 2012</span>
+<span class="cm">* @version 1.0</span>
+<span class="cm">* @requires KineticJS v3.9.4 or above - http://www.kineticjs.com/</span>
+<span class="cm">*</span>
+<span class="cm">* This program is free software; you can redistribute it and/or</span>
+<span class="cm">* modify it under the terms of the GNU General Public License</span>
+<span class="cm">* as published by the Free Software Foundation; either version 2</span>
+<span class="cm">* of the License, or (at your option) any later version.</span>
+<span class="cm">* </span>
+<span class="cm">* This program is distributed in the hope that it will be useful,</span>
+<span class="cm">* but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="cm">* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="cm">* GNU General Public License for more details.</span>
+<span class="cm">* </span>
+<span class="cm">* You should have received a copy of the GNU General Public License</span>
+<span class="cm">* along with this program; if not, write to the Free Software</span>
+<span class="cm">* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
+<span class="cm">*/</span>                                    
+
+<span class="cm">/**</span>
+<span class="cm"> * xKanvas Global Namespace</span>
+<span class="cm"> * @module xKanvas</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">xk</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="cm">/*</span>
+<span class="cm"> * xKanvas Version</span>
+<span class="cm"> * @namespace xKanvas</span>
+<span class="cm"> * @property ver</span>
+<span class="cm"> * @type string</span>
+<span class="cm"> */</span>
+<span class="nx">xk</span><span class="p">.</span><span class="nx">ver</span> <span class="o">=</span> <span class="s1">&#39;1.0&#39;</span><span class="p">;</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * xKanvas Extend utility</span>
+<span class="cm"> * @namespace xKanvas</span>
+<span class="cm"> * @method Extend</span>
+<span class="cm"> * @param {Object} obj1 Child Class Object</span>
+<span class="cm"> * @param {Object} obj2 Parent Class Object</span>
+<span class="cm"> */</span>
+<span class="nx">xk</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj1</span><span class="p">,</span> <span class="nx">obj2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj2</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">obj1</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">obj1</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">obj2</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span> 
+
+<span class="cm">/**</span>
+<span class="cm"> * xKanvas Base Object</span>
+<span class="cm"> * @namespace xKanvas</span>
+<span class="cm"> * @class Abstract Base Object Class</span>
+<span class="cm"> * @constructor</span>
+<span class="cm"> * @param {Object} o Configuration Object</span>
+<span class="cm"> */</span>
+<span class="nx">xk</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">){</span>
+    <span class="cm">/**</span>
+<span class="cm">     * Configuration Object</span>
+<span class="cm">     * @property o</span>
+<span class="cm">     * @type Object</span>
+<span class="cm">     */</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">o</span> <span class="o">=</span> <span class="nx">o</span> <span class="o">||</span> <span class="p">{};</span>
+<span class="p">};</span>
+<span class="nx">xk</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">clickeable</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">onClick</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Unsupported operation on an abstract class&#39;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">onMouseover</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cursor</span> <span class="o">=</span> <span class="s2">&quot;pointer&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * xKanvas Base Container</span>
+<span class="cm"> * @class Base Container</span>
+<span class="cm"> */</span>
+<span class="nx">xk</span><span class="p">.</span><span class="nx">con</span> <span class="o">=</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">o</span> <span class="o">=</span> <span class="nx">o</span> <span class="o">||</span> <span class="p">{};</span>
+<span class="p">};</span>
+    
+
+
+<span class="cm">/**</span>
+<span class="cm"> * xKanvas Button</span>
+<span class="cm"> * @class Button Class</span>
+<span class="cm"> * @extends Object Class</span>
+<span class="cm"> */</span>
+<span class="nx">xk</span><span class="p">.</span><span class="nx">btn</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">o</span><span class="p">){</span>
+    <span class="nx">xk</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="nx">o</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">xk</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">xk</span><span class="p">.</span><span class="nx">btn</span><span class="p">,</span> <span class="nx">xk</span><span class="p">.</span><span class="nx">obj</span><span class="p">);</span>
+
+<span class="nx">xk</span><span class="p">.</span><span class="nx">btn</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">onClick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Clicked&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+                    </div>
+			</div>
+		</div>
+		<div class="yui-b">
+            <div class="nav">
+
+                    <div id="moduleList" class="module">
+                        <h4>Modules</h4>
+                        <ul class="content">
+                                <li class="selected"><a href="module_xKanvas.html" title="xKanvas">xKanvas</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="classList" class="module">
+                        <h4>Classes</h4>
+                        <ul class="content">
+                                <li class=""><a href="xKanvas.Abstract Base Object Class.html" title="xKanvas.Abstract Base Object Class">xKanvas.Abstract Base Object Class</a></li>
+                                <li class=""><a href="xKanvas.Base Container.html" title="xKanvas.Base Container">xKanvas.Base Container</a></li>
+                                <li class=""><a href="xKanvas.Button Class.html" title="xKanvas.Button Class">xKanvas.Button Class</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="fileList" class="module">
+                        <h4>Files</h4>
+                        <ul class="content">        
+                                <li class="selected"><a href="xkanvas-source-1.0.js.html" title="xkanvas-source-1.0.js">xkanvas-source-1.0.js</a></li>
+                        </ul>
+                    </div>
+
+
+
+
+
+            </div>
+		</div>
+	</div>
+	<div id="ft">
+        <hr />
+        Copyright &copy; 2012 Yahoo! Inc. All rights reserved.
+	</div>
+</div>
+<script type="text/javascript">
+    ALL_YUI_PROPS = [{"url": "xKanvas.Abstract Base Object Class.html#property_o", "access": "", "host": "xKanvas.Abstract Base Object Class", "type": "property", "name": "o"}];
+</script>
+</body>
+</html>
