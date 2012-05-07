@@ -1,7 +1,8 @@
 /**
  * xKanvas Base Container
- * @property {Object} Base Container
+ * @class Base Container
  */
-xk.con = {
+xk.con = = function(o){
+    this.o = o || {};
+};
     
-}

@@ -11,7 +11,7 @@
 * @license Released under GPL v2 License - http://www.gnu.org/licenses/gpl-2.0.html
 * @author Cristian Ariel Cortez  
 * @copyright (c) 2012 - 2014 Cristian Ariel Cortez - cortez[dot]cristian[at]gmail[dot]com - http://cortezcristian.com.ar/
-* @date May 06 2012
+* @date May 07 2012
 * @version 1.0
 * @requires KineticJS v3.9.4 or above - http://www.kineticjs.com/
 *
@@ -32,29 +32,45 @@
 
 /**
  * xKanvas Global Namespace
- * @namespace
+ * @module xKanvas
  */
 var xk = {};
-/**
- * xKanvas Global Namespace
- * @property {String} Version
+/*
+ * xKanvas Version
+ * @namespace xKanvas
+ * @property ver
+ * @type string
  */
 xk.ver = '1.0';
 
+/*
+ * xKanvas Extend utility
+ * @namespace xKanvas
+ * @method Extend
+ * @param {Object} obj1 Child Class Object
+ * @param {Object} obj2 Parent Class Object
+ */
 xk.extend = function(obj1, obj2) {
-        for(var key in obj2.prototype) {
-            console.log(key)
-            if(obj2.prototype.hasOwnProperty(key) && obj1.prototype[key] === undefined) {
-                obj1.prototype[key] = obj2.prototype[key];
-            }
+    for(var key in obj2.prototype) {
+        if(obj2.prototype.hasOwnProperty(key) && obj1.prototype[key] === undefined) {
+            obj1.prototype[key] = obj2.prototype[key];
         }
-    }; 
+    }
+} 
 
 /**
  * xKanvas Base Object
+ * @namespace xKanvas
  * @class Abstract Base Object Class
+ * @constructor
+ * @param {Object} o Configuration Object
  */
 xk.obj = function(o){
+    /**
+     * Configuration Object
+     * @property o
+     * @type Object
+     */
     this.o = o || {};
 };
 xk.obj.prototype = {
@@ -69,11 +85,12 @@ xk.obj.prototype = {
 
 /**
  * xKanvas Base Container
- * @property {Object} Base Container
+ * @class Base Container
  */
-xk.con = {
+xk.con = = function(o){
+    this.o = o || {};
+};
     
-}
 
 
 /**
