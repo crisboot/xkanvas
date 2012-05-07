@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas {
+        border: 1px solid #9C9898;
+      }
+    </style>
+    <script src="./js/kinetic-v3.9.4.js"></script>
+    <script src="./library/xkanvas-source-1.0.js"></script>
+    <script>
+      function writeMessage(messageLayer, message) {
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = "18pt Calibri";
+        context.fillStyle = "black";
+        context.fillText(message, 10, 25);
+      }
+
+      window.onload = function() {
+        var stage = new Kinetic.Stage({
+          container: "container",
+          width: window.screen.width || 578,
+          height: window.screen.height || 200
+        });
+        var boxLayer = new Kinetic.Layer();
+        //var messageLayer = new Kinetic.Layer();
+        var rectX = stage.getWidth() / 2 - 500;
+        var rectY = stage.getHeight() / 2 - 300;
+        var xWindow = new Kinetic.Group({
+           x: 0,
+           y: 0,
+           draggable: true
+        });
+        // add linear gradient
+        var grd = boxLayer.getContext().createLinearGradient(0, 0, 0, 200);
+        // light blue
+        grd.addColorStop(0, "#6d6b68");
+        grd.addColorStop(0.03, "#595854");
+        grd.addColorStop(0.1, "#3c3b37");
+
+        var box = new Kinetic.Rect({
+          x: rectX,
+          y: rectY,
+          width: 550,
+          height: 350,
+          cornerRadius: 5,
+          fill: grd,
+          stroke: "black",
+          strokeWidth: 1,
+          name: "box"
+        });
+        
+        var grd2 = boxLayer.getContext().createLinearGradient(0, 0, 0, 50);
+        grd2.addColorStop(0, "#3c3b37");
+        grd2.addColorStop(0.98, "#595854");
+        grd2.addColorStop(1, "#6d6b68");
+
+
+        var txtTitle = new Kinetic.Text({
+            x: rectX + 70,
+            y: rectY + 15,
+            text: "crisboot@xkanvas: ~$",
+            alpha: 0.9,
+            fontSize: 12,
+            fontFamily: "Arial",
+            textFill: "#d1d1d1",
+            padding: 10,
+            align: "left",
+            verticalAlign: "middle",
+            fontStyle: "bold"
+        });
+
+        var sepLine = new Kinetic.Line({
+            points: [{x:rectX+0,y:rectY+30},{x:rectX+550,y:rectY+30}],
+            stroke: "#333",
+            strokeWidth: 1,
+            lineCap: 'round',
+            lineJoin: 'round',
+            name: "sepLine"
+        });
+        
+        var dragHandler = new Kinetic.Polygon({
+           points: [{x:rectX+545,y:rectY+345},{x:rectX+545,y:rectY+335},{x:rectX+535,y:rectY+345}],
+           fill: "#63625f",
+           stroke: "#3c3b37",
+           strokeWidth: 1,
+           draggable: true
+        });
+
+        dragHandler.on("dragmove", function() {
+            //debugger
+            var b = xWindow.get(".box"),
+            l = xWindow.get(".sepLine"),
+            w = 550 + this.attrs.x,
+            h = 350 + this.attrs.y;
+            //b[0].setSize(b[0].attrs.width + this.attrs.x,b[0].attrs.height + this.attrs.y)
+            //b[0].setSize(550 + this.attrs.x,350 + this.attrs.y)
+            b[0].setSize((w>550)?w:550,(h>350)?h:350)
+            l[0].setPoints([{x:rectX+0,y:rectY+30},{x:rectX+((w>550)?w:550),y:rectY+30}]);
+          //update(group, this);
+          //layer.draw();
+        });
+
+        dragHandler.on("mousedown touchstart", function() {
+            xWindow.draggable(false);
+            this.moveToTop();
+        });
+
+        dragHandler.on("dragend", function() {
+            xWindow.draggable(true);
+          //layer.draw();
+        });
+        // add hover styling
+        dragHandler.on("mouseover", function() {
+          var layer = this.getLayer();
+          document.body.style.cursor = "pointer";
+          this.setStrokeWidth(4);
+          layer.draw();
+        });
+
+        dragHandler.on("mouseout", function() {
+          var layer = this.getLayer();
+          document.body.style.cursor = "default";
+          this.setStrokeWidth(2);
+          layer.draw();
+        }); 
+
+        var btnContainer = new Kinetic.Rect({
+            x: rectX + 5,
+            y: rectY + 5,
+            width: 64,
+            height: 20,
+            cornerRadius: 10,
+            fill: grd2
+        });
+
+        var grd3 = boxLayer.getContext().createLinearGradient(0, 0, 0, 20);
+        grd3.addColorStop(0, "#f78d66");
+        grd3.addColorStop(0.05, "#e66228");
+        grd3.addColorStop(1, "#393834");
+
+        var btnCloseBg = new Kinetic.Circle({
+            x: rectX + 17,
+            y: rectY + 15,
+            radius: 9,
+            fill: grd3,
+            stroke: "#393834",
+            strokeWidth: 1
+        });
+
+        var closeIcon = new Kinetic.Group();
+        
+        var closeIconDown = new Kinetic.Line({
+            points: [{x:rectX+13,y:rectY+11},{x:rectX+21,y:rectY+19}],
+            stroke: "#595854",
+            strokeWidth: 1,
+            lineCap: 'round',
+            lineJoin: 'round'
+        });
+
+        var closeIconUp = new Kinetic.Line({
+            points: [{x:rectX+13,y:rectY+19},{x:rectX+21,y:rectY+11}],
+            stroke: "#595854",
+            strokeWidth: 1,
+            lineCap: 'round',
+            lineJoin: 'round'
+        });
+
+        closeIcon.add(closeIconDown);
+        closeIcon.add(closeIconUp);
+
+        var grd4 = boxLayer.getContext().createLinearGradient(0, 0, 0, 20);
+        grd4.addColorStop(0, "#6d6b68");
+        grd4.addColorStop(0.05, "#595854");
+        grd4.addColorStop(1, "#5a5954");
+
+        var btnMinimize = new Kinetic.Circle({
+            x: rectX + 37,
+            y: rectY + 15,
+            radius: 9,
+            fill: grd4,
+            stroke: "#393834",
+            strokeWidth: 1
+        });
+
+        var minIcon = new Kinetic.Line({
+            points: [{x:rectX+32,y:rectY+15},{x:rectX+42,y:rectY+15}],
+            stroke: "#393834",
+            strokeWidth: 1,
+            lineCap: 'round',
+            lineJoin: 'round'
+            
+        });
+        
+        var btnResize = new Kinetic.Circle({
+            x: rectX + 57,
+            y: rectY + 15,
+            radius: 9,
+            fill: grd4,
+            stroke: "#393834",
+            strokeWidth: 1
+        });
+
+        var rectIcon = new Kinetic.Rect({
+            x: rectX + 53,
+            y: rectY + 11,
+            width: 8,
+            height: 8,
+            stroke: "#393834",
+            strokeWidth: 1
+        });
+        
+        xWindow.add(box);
+        xWindow.add(txtTitle);
+        xWindow.add(sepLine);
+        xWindow.add(btnContainer);
+        xWindow.add(btnCloseBg);
+        xWindow.add(closeIcon);
+        xWindow.add(btnMinimize);
+        xWindow.add(minIcon);
+        xWindow.add(btnResize);
+        xWindow.add(rectIcon);
+        xWindow.add(dragHandler);
+
+        // write out drag and drop events
+        /*xWindow.on("dragstart", function() {
+          writeMessage(messageLayer, "dragstart");
+        });
+        xWindow.on("dragend", function() {
+          writeMessage(messageLayer, "dragend");
+        });*/
+
+        boxLayer.add(xWindow);
+
+        //stage.add(messageLayer);
+        stage.add(boxLayer);
+      };
+
+    </script>
+  </head>
+  <body onmousedown="return false;">
+    <div id="container"></div>
+  </body>
+</html>
