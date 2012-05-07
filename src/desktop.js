@@ -1,15 +1,15 @@
 /**
- * xKanvas Window
- * @class Window Class
+ * xKanvas Desktop
+ * @class Desktop Class
  * @extends conect Class
  */
-xk.window = function(o){
+xk.desktop = function(o){
     xk.con.call(this,o);
 };
 
-xk.extend(xk.window, xk.con);
+xk.extend(xk.desktop, xk.con);
 
-xk.window.prototype = { 
+xk.desktop.prototype = { 
 	pane: new Kinetic.Layer(),
 	addWin: function(win){
 		this.pane.add(win);

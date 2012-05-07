@@ -9,6 +9,8 @@ xk.btn = function(o){
 
 xk.extend(xk.btn, xk.obj);
 
-xk.btn.prototype.onClick = function(){
+xk.btn.prototype = { 
+	onClick: function(){
         alert("Clicked");
-};
+	}
+}

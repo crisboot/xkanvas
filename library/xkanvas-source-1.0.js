@@ -57,6 +57,23 @@ xk.extend = function(obj1, obj2) {
     }
 } 
 
+
+xk.stage = {};
+
+xk.init = function(o){
+	var obj = {
+		container: "container",
+		width: window.screen.width || 578,
+		height: window.screen.height || 200
+	}
+	xk.extend(obj, o);
+	
+	xk.stage = new Kinetic.Stage({
+		container: obj.container,
+		width: obj.width,
+		height: obj.height
+	});
+}
 /**
  * xKanvas Base Object
  * @namespace xKanvas
@@ -73,6 +90,13 @@ xk.obj = function(o){
     this.o = o || {};
 };
 xk.obj.prototype = {
+	// Due to this being a leaf, it doesn't use these methods,
+    // but must implement them to count as implementing the
+    // Composite interface
+    add: function () { },
+    remove: function () { },	
+    getChild: function () { },
+	
     clickeable: true,
     onClick: function(){
         throw new Error('Unsupported operation on an abstract class');
@@ -87,10 +111,65 @@ xk.obj.prototype = {
  * @class Base Container
  */
 xk.con = function(o){
+	this.children = [];
     this.o = o || {};
 };
     
+xk.con.prototype = {
+	add: function (child) {
+        this.children.push(child);
+    },
+	getChild: function (i) {
+        return this.children[i];
+    },
+	remove: function (child) {
+        for (var node, i = 0; node = this.getChild(i); i++) {
+            if (node == child) {
+                this.children.splice(i, 1);
+                return true;
+            }
 
+            if (node.remove(child)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+/**
+ * xKanvas Panel
+ * @class Panel Class
+ * @extends conect Class
+ */
+xk.pan = function(o){
+    xk.con.call(this,o);
+};
+
+xk.extend(xk.pan, xk.con);
+
+xk.pan.prototype = { 
+	//width: this.o.width || 578,
+    //height: this.o.height || 200
+}
+
+/**
+ * xKanvas Desktop
+ * @class Desktop Class
+ * @extends conect Class
+ */
+xk.desktop = function(o){
+    xk.con.call(this,o);
+};
+
+xk.extend(xk.desktop, xk.con);
+
+xk.desktop.prototype = { 
+	pane: new Kinetic.Layer(),
+	addWin: function(win){
+		this.pane.add(win);
+	}
+}
 
 /**
  * xKanvas Button
@@ -103,8 +182,11 @@ xk.btn = function(o){
 
 xk.extend(xk.btn, xk.obj);
 
-xk.btn.prototype.onClick = function(){
+xk.btn.prototype = { 
+	onClick: function(){
         alert("Clicked");
-};
+	}
+}
+
 
 

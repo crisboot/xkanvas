@@ -8,8 +8,10 @@ class Build < Thor
         "object.js",
         "container.js",
         "panel.js",
+        "desktop.js",
         "button.js",
-        "window.js"
+        "window.js",
+        "tail.js"
     ]
 
     desc "development", "Merge javascript files from ./src directory into ./library/xkanvas-souce-VERSION.js"

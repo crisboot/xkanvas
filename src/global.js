@@ -24,3 +24,21 @@ xk.extend = function(obj1, obj2) {
         }
     }
 } 
+
+
+xk.stage = {};
+
+xk.init = function(o){
+	var obj = {
+		container: "container",
+		width: window.screen.width || 578,
+		height: window.screen.height || 200
+	}
+	xk.extend(obj, o);
+	
+	xk.stage = new Kinetic.Stage({
+		container: obj.container,
+		width: obj.width,
+		height: obj.height
+	});
+}
