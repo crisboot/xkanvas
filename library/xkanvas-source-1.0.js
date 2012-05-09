@@ -11,7 +11,7 @@
 * @license Released under GPL v2 License - http://www.gnu.org/licenses/gpl-2.0.html
 * @author Cristian Ariel Cortez  
 * @copyright (c) 2012 - 2014 Cristian Ariel Cortez - cortez[dot]cristian[at]gmail[dot]com - http://cortezcristian.com.ar/
-* @date May 07 2012
+* @date May 09 2012
 * @version 1.0
 * @requires KineticJS v3.9.4 or above - http://www.kineticjs.com/
 *
@@ -59,6 +59,7 @@ xk.extend = function(obj1, obj2) {
 
 
 xk.stage = {};
+xk.desktop = {};
 
 xk.init = function(o){
 	var obj = {
@@ -73,7 +74,14 @@ xk.init = function(o){
 		width: obj.width,
 		height: obj.height
 	});
+
+    xk.desktop  = new Kinetic.Layer();
 }
+
+xk.render = function(o){
+    xk.stage.add(xk.desktop)
+}
+
 /**
  * xKanvas Base Object
  * @namespace xKanvas
@@ -158,6 +166,7 @@ xk.pan.prototype = {
  * @class Desktop Class
  * @extends conect Class
  */
+ /*
 xk.desktop = function(o){
     xk.con.call(this,o);
 };
@@ -169,7 +178,7 @@ xk.desktop.prototype = {
 	addWin: function(win){
 		this.pane.add(win);
 	}
-}
+}*/
 
 /**
  * xKanvas Button
@@ -188,5 +197,44 @@ xk.btn.prototype = {
 	}
 }
 
+/**
+ * xKanvas Window
+ * @class Window Class
+ * @extends conect Class
+ */
+/*
+xk.window = function(o){
+    xk.con.call(this,o);
+};
+
+xk.extend(xk.window, xk.con);
+*/
+xk.window = function(){ 
+    this.grp = new Kinetic.Group({
+        x: 0,
+        y: 0,
+        draggable: true
+    });
+
+        var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
+        grd.addColorStop(0, "#6d6b68");
+        grd.addColorStop(0.03, "#595854");
+        grd.addColorStop(0.1, "#3c3b37");
+
+        var box = new Kinetic.Rect({
+          x: 500,
+          y: 400,
+          width: 550,
+          height: 350,
+          cornerRadius: 5,
+          fill: grd,
+          stroke: "black",
+          strokeWidth: 1,
+          name: "box"
+        });
+    this.grp.add(box);
+
+	return this.grp;
+}
 
 

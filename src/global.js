@@ -27,6 +27,7 @@ xk.extend = function(obj1, obj2) {
 
 
 xk.stage = {};
+xk.desktop = {};
 
 xk.init = function(o){
 	var obj = {
@@ -41,4 +42,10 @@ xk.init = function(o){
 		width: obj.width,
 		height: obj.height
 	});
+
+    xk.desktop  = new Kinetic.Layer();
+}
+
+xk.render = function(o){
+    xk.stage.add(xk.desktop)
 }

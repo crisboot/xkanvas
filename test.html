@@ -19,9 +19,9 @@
 			width: window.screen.width || 578,
 			height: window.screen.height || 200
 		});
-		
-		var Desktop = new xk.desktop();
-		var Desktop = new xk.window();
+	    var xWindow = new xk.window();
+        xk.desktop.add(xWindow);	
+		xk.render();
 	};
 
     </script>
@@ -30,6 +30,7 @@
     <div id="container"></div>
   </body>
 </html>
+
 
 
 

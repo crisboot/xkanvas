@@ -3,6 +3,7 @@
  * @class Desktop Class
  * @extends conect Class
  */
+ /*
 xk.desktop = function(o){
     xk.con.call(this,o);
 };
@@ -14,4 +15,4 @@ xk.desktop.prototype = {
 	addWin: function(win){
 		this.pane.add(win);
 	}
-}
+}*/

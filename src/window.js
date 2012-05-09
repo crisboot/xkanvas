@@ -3,15 +3,37 @@
  * @class Window Class
  * @extends conect Class
  */
+/*
 xk.window = function(o){
     xk.con.call(this,o);
 };
 
 xk.extend(xk.window, xk.con);
+*/
+xk.window = function(){ 
+    this.grp = new Kinetic.Group({
+        x: 0,
+        y: 0,
+        draggable: true
+    });
 
-xk.window.prototype = { 
-	pane: new Kinetic.Layer(),
-	addWin: function(win){
-		this.pane.add(win);
-	}
+        var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
+        grd.addColorStop(0, "#6d6b68");
+        grd.addColorStop(0.03, "#595854");
+        grd.addColorStop(0.1, "#3c3b37");
+
+        var box = new Kinetic.Rect({
+          x: 500,
+          y: 400,
+          width: 550,
+          height: 350,
+          cornerRadius: 5,
+          fill: grd,
+          stroke: "black",
+          strokeWidth: 1,
+          name: "box"
+        });
+    this.grp.add(box);
+
+	return this.grp;
 }
