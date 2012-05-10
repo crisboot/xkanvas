@@ -53,6 +53,8 @@ xk.window = function(){
     this.grp.add(box);
     this.grp.add(bgControlBtns);
     this.grp.add(new xk.btns.closeBtn({x:rectX,y:rectY}));
+    this.grp.add(new xk.btns.roundMinBtn({x:rectX,y:rectY}));
+    this.grp.add(new xk.btns.roundMaxBtn({x:rectX,y:rectY}));
 
 	return this.grp;
 }
