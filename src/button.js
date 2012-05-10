@@ -59,7 +59,7 @@ xk.btn = function(o){
 
 
     closeIcon.on("click", function() {
-        this.getLayer().hide();
+        this.getParent().getParent().hide();
 		xk.render();
     }); 
 
