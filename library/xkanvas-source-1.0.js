@@ -55,7 +55,13 @@ xk.extend = function(obj1, obj2) {
             obj1.prototype[key] = obj2.prototype[key];
         }
     }
-} 
+}
+
+xk.override = function(obj1, obj2) {
+    for(var key in obj2) {
+            obj1[key] = obj2[key];
+    }
+}
 
 
 xk.stage = {};
@@ -438,14 +444,36 @@ xk.window = function(o){
 
 xk.extend(xk.window, xk.con);
 */
-xk.window = function(){ 
+xk.window = function(o){ 
+	var conf = {
+		title: "Window Title",
+		rectX: 100,
+		rectY: 70
+	};
+	
+	xk.override(conf, o || {});
+
     this.grp = new Kinetic.Group({
         x: 0,
         y: 0,
         draggable: true
     });
 	
-	var rectX = 100, rectY = 70;
+	var rectX = conf.rectX, rectY = conf.rectY;
+	
+	var txtTitle = new Kinetic.Text({
+		x: rectX + 70,
+		y: rectY + 15,
+		text: conf.title,
+		alpha: 0.9,
+		fontSize: 12,
+		fontFamily: "Arial",
+		textFill: "#d1d1d1",
+		padding: 10,
+		align: "left",
+		verticalAlign: "middle",
+		fontStyle: "bold"
+	});
 
     var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
     grd.addColorStop(0, "#6d6b68");
@@ -483,6 +511,7 @@ xk.window = function(){
     this.grp.add(new xk.btns.closeBtn({x:rectX,y:rectY}));
     this.grp.add(new xk.btns.roundMinBtn({x:rectX,y:rectY}));
     this.grp.add(new xk.btns.roundMaxBtn({x:rectX,y:rectY}));
+    this.grp.add(txtTitle);
 
 	return this.grp;
 }
