@@ -57,6 +57,12 @@ xk.btn = function(o){
           layer.draw();
     }); 
 
+
+    closeIcon.on("click", function() {
+        this.getLayer().hide();
+		xk.render();
+    }); 
+
     return closeIcon;
 }
 
