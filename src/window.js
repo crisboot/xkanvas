@@ -17,23 +17,25 @@ xk.window = function(){
         draggable: true
     });
 
-        var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
-        grd.addColorStop(0, "#6d6b68");
-        grd.addColorStop(0.03, "#595854");
-        grd.addColorStop(0.1, "#3c3b37");
+    var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
+    grd.addColorStop(0, "#6d6b68");
+    grd.addColorStop(0.03, "#595854");
+    grd.addColorStop(0.1, "#3c3b37");
 
-        var box = new Kinetic.Rect({
-          x: 500,
-          y: 400,
-          width: 550,
-          height: 350,
-          cornerRadius: 5,
-          fill: grd,
-          stroke: "black",
-          strokeWidth: 1,
-          name: "box"
-        });
+    var box = new Kinetic.Rect({
+      x: 500,
+      y: 400,
+      width: 550,
+      height: 350,
+      cornerRadius: 5,
+      fill: grd,
+      stroke: "black",
+      strokeWidth: 1,
+      name: "box"
+    });
+
     this.grp.add(box);
+    this.grp.add(new xk.btn({x:500,y:400}));
 
 	return this.grp;
 }
