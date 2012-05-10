@@ -16,6 +16,8 @@ xk.window = function(){
         y: 0,
         draggable: true
     });
+	
+	var rectX = 100, rectY = 70;
 
     var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
     grd.addColorStop(0, "#6d6b68");
@@ -23,8 +25,8 @@ xk.window = function(){
     grd.addColorStop(0.1, "#3c3b37");
 
     var box = new Kinetic.Rect({
-      x: 500,
-      y: 400,
+      x: rectX,
+      y: rectY,
       width: 550,
       height: 350,
       cornerRadius: 5,
@@ -34,8 +36,23 @@ xk.window = function(){
       name: "box"
     });
 
+	var grd2 = xk.desktop.getContext().createLinearGradient(0, 0, 0, 50);
+	grd2.addColorStop(0, "#3c3b37");
+	grd2.addColorStop(0.98, "#595854");
+	grd2.addColorStop(1, "#6d6b68");
+
+    var bgControlBtns = new Kinetic.Rect({
+      x: rectX + 5,
+      y: rectY + 5,
+      width: 64,
+      height: 20,
+      cornerRadius: 10,
+      fill: grd2
+    });
+
     this.grp.add(box);
-    this.grp.add(new xk.btn({x:500,y:400}));
+    this.grp.add(bgControlBtns);
+    this.grp.add(new xk.btns.closeBtn({x:rectX,y:rectY}));
 
 	return this.grp;
 }

@@ -241,11 +241,89 @@ xk.btn = function(o){
 
 
     closeIcon.on("click", function() {
-        this.getLayer().hide();
+        this.getParent().getParent().hide();
 		xk.render();
     }); 
 
     return closeIcon;
+}
+
+/* Namespace for generated buttons */
+xk.btns = {};
+
+xk.btns.closeBtn = function(o){
+	return this.init(o);
+};
+
+//xk.extend(xk.btns.closeBtn, Kinetic.Group);
+
+xk.btns.closeBtn.prototype = {
+	getGradient: function(){
+		var grd3 = xk.desktop.getContext().createLinearGradient(0, 0, 0, 20);
+		grd3.addColorStop(0, "#f78d66");
+		grd3.addColorStop(0.05, "#e66228");
+		grd3.addColorStop(1, "#393834");
+		
+		return grd3;
+	},
+	getIcon: function(rectX, rectY){
+		//Icon Group
+		var closeIcon = new Kinetic.Group();
+		
+		var btnCloseBg = new Kinetic.Circle({
+				x: rectX + 17,
+				y: rectY + 15,
+				radius: 9,
+				fill: this.getGradient(),
+				stroke: "#393834",
+				strokeWidth: 1
+		});
+
+		var closeIconDown = new Kinetic.Line({
+			points: [{x:rectX+13,y:rectY+11},{x:rectX+21,y:rectY+19}],
+			stroke: "#595854",
+			strokeWidth: 1,
+			lineCap: 'round',
+			lineJoin: 'round'
+		});
+
+		var closeIconUp = new Kinetic.Line({
+			points: [{x:rectX+13,y:rectY+19},{x:rectX+21,y:rectY+11}],
+			stroke: "#595854",
+			strokeWidth: 1,
+			lineCap: 'round',
+			lineJoin: 'round'
+		});
+
+		closeIcon.add(btnCloseBg);
+		closeIcon.add(closeIconDown);
+		closeIcon.add(closeIconUp);
+		
+		return closeIcon;
+	},
+	init: function(o){
+		var rectX = o.x, rectY = o.y;
+	
+		var ico = this.getIcon(rectX, rectY);
+		ico.on("mouseover", this.onMouseover);
+		ico.on("mouseout", this.onMouseout);
+		ico.on("click", this.onClick);
+		return ico;
+	},
+	onMouseover: function(){
+		var layer = this.getLayer();
+		document.body.style.cursor = "pointer";
+		layer.draw();
+	},
+	onMouseout: function(){
+		var layer = this.getLayer();
+		document.body.style.cursor = "default";
+		layer.draw();
+	},
+	onClick: function(){
+		this.getParent().getParent().hide();
+		xk.render();
+	}
 }
 
 
@@ -267,6 +345,8 @@ xk.window = function(){
         y: 0,
         draggable: true
     });
+	
+	var rectX = 100, rectY = 70;
 
     var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
     grd.addColorStop(0, "#6d6b68");
@@ -274,8 +354,8 @@ xk.window = function(){
     grd.addColorStop(0.1, "#3c3b37");
 
     var box = new Kinetic.Rect({
-      x: 500,
-      y: 400,
+      x: rectX,
+      y: rectY,
       width: 550,
       height: 350,
       cornerRadius: 5,
@@ -285,8 +365,23 @@ xk.window = function(){
       name: "box"
     });
 
+	var grd2 = xk.desktop.getContext().createLinearGradient(0, 0, 0, 50);
+	grd2.addColorStop(0, "#3c3b37");
+	grd2.addColorStop(0.98, "#595854");
+	grd2.addColorStop(1, "#6d6b68");
+
+    var bgControlBtns = new Kinetic.Rect({
+      x: rectX + 5,
+      y: rectY + 5,
+      width: 64,
+      height: 20,
+      cornerRadius: 10,
+      fill: grd2
+    });
+
     this.grp.add(box);
-    this.grp.add(new xk.btn({x:500,y:400}));
+    this.grp.add(bgControlBtns);
+    this.grp.add(new xk.btns.closeBtn({x:rectX,y:rectY}));
 
 	return this.grp;
 }
