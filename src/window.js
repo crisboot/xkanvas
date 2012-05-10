@@ -13,8 +13,10 @@ xk.extend(xk.window, xk.con);
 xk.window = function(o){ 
 	var conf = {
 		title: "Window Title",
-		rectX: 100,
-		rectY: 70
+		rectX: 330,
+		rectY: 170,
+		width: 550,
+		height: 350
 	};
 	
 	xk.override(conf, o || {});
@@ -49,8 +51,8 @@ xk.window = function(o){
     var box = new Kinetic.Rect({
       x: rectX,
       y: rectY,
-      width: 550,
-      height: 350,
+      width: conf.width,
+      height: conf.height,
       cornerRadius: 5,
       fill: grd,
       stroke: "black",
@@ -71,13 +73,25 @@ xk.window = function(o){
       cornerRadius: 10,
       fill: grd2
     });
+	
+	var sepLine = new Kinetic.Line({
+		points: [{x:rectX+0,y:rectY+30},{x:rectX+conf.width,y:rectY+30}],
+		stroke: "#333",
+		strokeWidth: 1,
+		lineCap: 'round',
+		lineJoin: 'round',
+		name: "sepLine"
+	});
 
     this.grp.add(box);
+	//basic window header
     this.grp.add(bgControlBtns);
     this.grp.add(new xk.btns.closeBtn({x:rectX,y:rectY}));
     this.grp.add(new xk.btns.roundMinBtn({x:rectX,y:rectY}));
     this.grp.add(new xk.btns.roundMaxBtn({x:rectX,y:rectY}));
+    this.grp.add(sepLine);
     this.grp.add(txtTitle);
+	
 
 	return this.grp;
 }

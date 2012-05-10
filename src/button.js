@@ -141,6 +141,7 @@ xk.btns.closeBtn.prototype = {
 	onClick: function(){
 		this.getParent().getParent().hide();
 		xk.render();
+		document.body.style.cursor = "default";
 	}
 }
 

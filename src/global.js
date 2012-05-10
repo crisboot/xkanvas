@@ -31,15 +31,28 @@ xk.override = function(obj1, obj2) {
     }
 }
 
+/*
+	http://james.padolsey.com/javascript/get-document-height-cross-browser/
+*/
+xk.getDocHeight = function() {
+    var D = document;
+    return Math.max(
+        Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+        Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+        Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+    );
+}
+
 
 xk.stage = {};
 xk.desktop = {};
 
 xk.init = function(o){
+
 	var obj = {
 		container: "container",
-		width: window.screen.width || 578,
-		height: window.screen.height || 200
+		width: window.innerWidth || window.screen.width,
+		height: xk.getDocHeight() || window.screen.height
 	}
 	xk.extend(obj, o);
 	
