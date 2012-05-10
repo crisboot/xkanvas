@@ -78,9 +78,10 @@ xk.getDocHeight = function() {
 
 xk.stage = {};
 xk.desktop = {};
+xk.desktopBar = {};
 
 xk.init = function(o){
-
+	//TODO: add right click support: document.oncontextmenu = function(e) {alert("a"); return false;} 
 	var obj = {
 		container: "container",
 		width: window.innerWidth || window.screen.width,
@@ -94,11 +95,14 @@ xk.init = function(o){
 		height: obj.height
 	});
 
-    xk.desktop  = new Kinetic.Layer();
+    xk.desktop  = new Kinetic.Layer({y:30});
+    xk.desktopBar  = new Kinetic.Layer();
 }
 
 xk.render = function(o){
-    xk.stage.add(xk.desktop)
+    xk.stage.add(xk.desktop);
+    xk.desktopBar.add(new xk.mainBar());
+    xk.stage.add(xk.desktopBar);
 }
 
 /**
@@ -198,6 +202,31 @@ xk.desktop.prototype = {
 		this.pane.add(win);
 	}
 }*/
+xk.mainBar = function(){
+
+    this.bar = new Kinetic.Group({
+        x: 0,
+        y: 0
+    });
+
+    var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
+    grd.addColorStop(0, "#6d6b68");
+    grd.addColorStop(0.03, "#595854");
+    grd.addColorStop(0.1, "#3c3b37");
+
+    var box = new Kinetic.Rect({
+      x: 0,
+      y: 0,
+      width: window.innerWidth || window.screen.width,
+      height: 30,
+      fill: grd,
+      stroke: "black",
+      strokeWidth: 1,
+      name: "topBar"
+    });
+    this.bar.add(box);
+    return this.bar;
+}
 
 /**
  * xKanvas Button
@@ -507,7 +536,14 @@ xk.window = function(o){
       strokeWidth: 1,
       name: "box"
     });
-
+	/* TODO: Add shadow
+	var context = box.getContext();
+	context.shadowColor = "#bbbbbb";
+    context.shadowBlur = 20;
+    context.shadowOffsetX = 15;
+    context.shadowOffsetY = 15;
+	*/
+	
 	var grd2 = xk.desktop.getContext().createLinearGradient(0, 0, 0, 50);
 	grd2.addColorStop(0, "#3c3b37");
 	grd2.addColorStop(0.98, "#595854");
