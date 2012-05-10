@@ -46,6 +46,7 @@ xk.getDocHeight = function() {
 
 xk.stage = {};
 xk.desktop = {};
+xk.desktopBar = {};
 
 xk.init = function(o){
 	//TODO: add right click support: document.oncontextmenu = function(e) {alert("a"); return false;} 
@@ -62,9 +63,12 @@ xk.init = function(o){
 		height: obj.height
 	});
 
-    xk.desktop  = new Kinetic.Layer();
+    xk.desktop  = new Kinetic.Layer({y:30});
+    xk.desktopBar  = new Kinetic.Layer();
 }
 
 xk.render = function(o){
-    xk.stage.add(xk.desktop)
+    xk.stage.add(xk.desktop);
+    xk.desktopBar.add(new xk.mainBar());
+    xk.stage.add(xk.desktopBar);
 }
