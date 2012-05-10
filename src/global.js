@@ -48,7 +48,7 @@ xk.stage = {};
 xk.desktop = {};
 
 xk.init = function(o){
-
+	//TODO: add right click support: document.oncontextmenu = function(e) {alert("a"); return false;} 
 	var obj = {
 		container: "container",
 		width: window.innerWidth || window.screen.width,

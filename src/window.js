@@ -59,7 +59,14 @@ xk.window = function(o){
       strokeWidth: 1,
       name: "box"
     });
-
+	/* TODO: Add shadow
+	var context = box.getContext();
+	context.shadowColor = "#bbbbbb";
+    context.shadowBlur = 20;
+    context.shadowOffsetX = 15;
+    context.shadowOffsetY = 15;
+	*/
+	
 	var grd2 = xk.desktop.getContext().createLinearGradient(0, 0, 0, 50);
 	grd2.addColorStop(0, "#3c3b37");
 	grd2.addColorStop(0.98, "#595854");
