@@ -116,7 +116,7 @@ xk.render = function(o){
 
           // add the shape to the layer
           xk.desktop.add(image);
-
+          xk.desktop.draw();
           // add the layer to the stage
           //xk.stage.add(layer);
         };
