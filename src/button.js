@@ -139,8 +139,11 @@ xk.btns.closeBtn.prototype = {
 		layer.draw();
 	},
 	onClick: function(){
-		this.getParent().getParent().hide();
-		xk.render();
+		//this.getParent().getParent().hide();
+		this.getParent().hide();
+		xk.desktop.draw();
+		//this.getParent().getParent().draw();
+		//xk.render();
 		document.body.style.cursor = "default";
 	}
 }

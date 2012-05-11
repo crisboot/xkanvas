@@ -99,6 +99,11 @@ xk.window = function(o){
     this.grp.add(sepLine);
     this.grp.add(txtTitle);
 	
+	this.grp.on('click', function(){
+		this.moveToTop();
+		xk.desktop.draw();
+	});
 
 	return this.grp;
 }
+
