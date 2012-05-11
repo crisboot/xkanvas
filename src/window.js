@@ -103,6 +103,10 @@ xk.window = function(o){
 		this.moveToTop();
 		xk.desktop.draw();
 	});
+	
+	this.grp.on("mousedown touchstart", function() {
+		this.moveToTop();
+	});
 
 	return this.grp;
 }
