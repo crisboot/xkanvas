@@ -64,29 +64,34 @@ xk.init = function(o){
 	});
 
     xk.desktop  = new Kinetic.Layer({y:30});
+    xk.desktopCon  = new Kinetic.Layer({y:30}); /*Desktop icons container*/
     xk.desktopBar  = new Kinetic.Layer();
+	
+	var imageObj = new Image();
+	imageObj.onload = function() {
+	  var image = new Kinetic.Image({
+		x: 15,
+		y: 35,
+		image: imageObj,
+		width: 48,
+		height: 48,
+		ZIndex: 0
+	  });
+
+	  // add the shape to the layer
+	  xk.desktopCon.add(image);
+	  xk.desktopCon.draw();
+	  // add the layer to the stage
+	  //xk.stage.add(layer);
+	};
+	imageObj.src = "./img/ico-xfce-terminal.png";
 }
 
 xk.render = function(o){
+
+	//adding stuff
+	xk.stage.add(xk.desktopCon);
     xk.stage.add(xk.desktop);
     xk.desktopBar.add(new xk.mainBar());
     xk.stage.add(xk.desktopBar);
-    var imageObj = new Image();
-        imageObj.onload = function() {
-          var image = new Kinetic.Image({
-            x: 15,
-            y: 35,
-            image: imageObj,
-            width: 48,
-            height: 48,
-            ZIndex: 0
-          });
-
-          // add the shape to the layer
-          xk.desktop.add(image);
-          xk.desktop.draw();
-          // add the layer to the stage
-          //xk.stage.add(layer);
-        };
-        imageObj.src = "./img/ico-xfce-terminal.png";
 }
