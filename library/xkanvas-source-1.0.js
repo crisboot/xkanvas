@@ -103,6 +103,24 @@ xk.render = function(o){
     xk.stage.add(xk.desktop);
     xk.desktopBar.add(new xk.mainBar());
     xk.stage.add(xk.desktopBar);
+    var imageObj = new Image();
+        imageObj.onload = function() {
+          var image = new Kinetic.Image({
+            x: 15,
+            y: 35,
+            image: imageObj,
+            width: 48,
+            height: 48,
+            ZIndex: 0
+          });
+
+          // add the shape to the layer
+          xk.desktop.add(image);
+
+          // add the layer to the stage
+          //xk.stage.add(layer);
+        };
+        imageObj.src = "./img/ico-xfce-terminal.png";
 }
 
 /**
