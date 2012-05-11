@@ -38,6 +38,53 @@ xk.mainBar = function(){
       strokeWidth: 1,
       name: "topBar"
     });
+	
+	var d = new Date(),
+	h = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours()),
+	m = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()),
+	s = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()),
+	da = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()),
+	mo = (d.getMonth() < 10 ? '0' + (d.getMonth() + 1): d.getMonth()),
+	text = da + '-' + mo + '-' + d.getFullYear() + '   ' + h + ':' + m + ':' + s ;
+	
+	
+	var clockLabel = new Kinetic.Text({
+		x: window.innerWidth - 150,
+		y: 15,
+		text: text,
+		alpha: 0.9,
+		fontSize: 10,
+		fontFamily: "Arial",
+		textFill: "#d1d1d1",
+		padding: 15,
+		align: "left",
+		verticalAlign: "middle",
+		name: "mainClock",
+		fontStyle: "normal"
+	});
     this.bar.add(box);
+	this.bar.add(clockLabel);
     return this.bar;
+}
+
+//Namespace for apps
+xk.apps = {};
+
+xk.apps.init = function(){
+	xk.apps.clock();
+};
+
+xk.apps.clock = function(name){
+	setInterval(function(){
+	var d = new Date(),
+	h = (d.getHours() < 10 ? '0' + d.getHours() : d.getHours()),
+	m = (d.getMinutes() < 10 ? '0' + d.getMinutes() : d.getMinutes()),
+	s = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()),
+	da = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()),
+	mo = (d.getMonth() < 10 ? '0' + (d.getMonth() + 1): d.getMonth()),
+	text = da + '-' + mo + '-' + d.getFullYear() + '   ' + h + ':' + m + ':' + s ;
+	
+	xk.desktopBar.get(".mainClock")[0].setText(text);
+	xk.desktopBar.draw();
+	},1000);
 }

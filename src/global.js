@@ -66,8 +66,10 @@ xk.init = function(o){
     xk.desktop  = new Kinetic.Layer({y:30});
     xk.desktopCon  = new Kinetic.Layer({y:30}); /*Desktop icons container*/
     xk.desktopBar  = new Kinetic.Layer();
+	//init apps
+	xk.apps.init();
 	
-	var imageObj = new Image();
+	var imageObj = new Image({draggable: true});
 	imageObj.onload = function() {
 	  var image = new Kinetic.Image({
 		x: 15,
@@ -77,7 +79,7 @@ xk.init = function(o){
 		height: 48,
 		ZIndex: 0
 	  });
-
+	  
 	  // add the shape to the layer
 	  xk.desktopCon.add(image);
 	  xk.desktopCon.draw();
@@ -85,10 +87,16 @@ xk.init = function(o){
 	  //xk.stage.add(layer);
 	};
 	imageObj.src = "./img/ico-xfce-terminal.png";
+	/*
+	imageObj.on('click', function(){
+		var xWindow3 = new xk.window({rectX: 60,rectY: 270});
+		xk.desktop.add(xWindow3);
+	});*/
+	
 }
 
 xk.render = function(o){
-
+	
 	//adding stuff
 	xk.stage.add(xk.desktopCon);
     xk.stage.add(xk.desktop);
