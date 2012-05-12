@@ -11,7 +11,7 @@
 * @license Released under GPL v2 License - http://www.gnu.org/licenses/gpl-2.0.html
 * @author Cristian Ariel Cortez  
 * @copyright (c) 2012 - 2014 Cristian Ariel Cortez - cortez[dot]cristian[at]gmail[dot]com - http://cortezcristian.com.ar/
-* @date May 11 2012
+* @date May 12 2012
 * @version 1.0
 * @requires KineticJS v3.9.4 or above - http://www.kineticjs.com/
 *
@@ -262,7 +262,7 @@ xk.mainBar = function(){
 	s = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()),
 	da = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()),
 	mo = (d.getMonth() < 10 ? '0' + (d.getMonth() + 1): d.getMonth()),
-	text = da + '-' + mo + '-' + d.getFullYear() + '   ' + h + ':' + m + ':' + s ;
+	text = d.toString().substring(0,3) + ' ' + da + ' ' + d.toString().substring(4,7) + ', ' + h + ':' + m + ':' + s ;
 	
 	
 	var clockLabel = new Kinetic.Text({
@@ -279,7 +279,48 @@ xk.mainBar = function(){
 		name: "mainClock",
 		fontStyle: "normal"
 	});
+
+    var mainMenu = new Kinetic.Group();
+    
+	var xkLabel = new Kinetic.Text({
+		x: 20,
+		y: 15,
+		text: "xkanvas",
+		alpha: 0.9,
+		fontSize: 14,
+		fontFamily: "Arial",
+		textFill: "#d1d1d1",
+		padding: 15,
+		align: "left",
+		verticalAlign: "middle",
+		fontStyle: "normal"
+	});
+
+	var imageObj = new Image({draggable: true});
+	imageObj.onload = function() {
+	  var image = new Kinetic.Image({
+		x: 5,
+		y: 0,
+		image: imageObj,
+		width: 28,
+		height: 28,
+		ZIndex: 0
+	  });
+	  
+	  // add the shape to the layer
+	  mainMenu.add(image);
+	  xk.desktopBar.draw();
+	  //xk.desktopCon.draw();
+	  // add the layer to the stage
+	  //xk.stage.add(layer);
+	};
+	imageObj.src = "./img/logo.png";
+    mainMenu.add(xkLabel);
+    mainMenu.add(xkLabel);
+
+
     this.bar.add(box);
+    this.bar.add(mainMenu);
 	this.bar.add(clockLabel);
     return this.bar;
 }
@@ -299,7 +340,8 @@ xk.apps.clock = function(name){
 	s = (d.getSeconds() < 10 ? '0' + d.getSeconds() : d.getSeconds()),
 	da = (d.getDate() < 10 ? '0' + d.getDate() : d.getDate()),
 	mo = (d.getMonth() < 10 ? '0' + (d.getMonth() + 1): d.getMonth()),
-	text = da + '-' + mo + '-' + d.getFullYear() + '   ' + h + ':' + m + ':' + s ;
+	text = d.toString().substring(0,3) + ' ' + da + ' ' + d.toString().substring(4,7) + ', ' + h + ':' + m + ':' + s ;
+	//text = da + '-' + mo + '-' + d.getFullYear() + '   ' + h + ':' + m + ':' + s ;
 	
 	xk.desktopBar.get(".mainClock")[0].setText(text);
 	xk.desktopBar.draw();
