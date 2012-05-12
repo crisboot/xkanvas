@@ -316,7 +316,9 @@ xk.mainBar = function(){
 	};
 	imageObj.src = "./img/logo.png";
     mainMenu.add(xkLabel);
-    mainMenu.add(xkLabel);
+    mainMenu.on('click', function(){
+        alert("show menu")
+    });
 
 
     this.bar.add(box);
