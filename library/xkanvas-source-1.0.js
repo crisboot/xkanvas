@@ -644,18 +644,57 @@ xk.window = function(o){
 		verticalAlign: "middle",
 		fontStyle: "bold"
 	});
-
-    var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
+    var grd = xk.desktop.getContext().createLinearGradient(0, rectY, 0, rectY+200);
+    //var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
     grd.addColorStop(0, "#6d6b68");
     grd.addColorStop(0.03, "#595854");
     grd.addColorStop(0.1, "#3c3b37");
-
+/*
     var box = new Kinetic.Rect({
       x: rectX,
       y: rectY,
       width: conf.width,
       height: conf.height,
       cornerRadius: 5,
+      fill: grd,
+      stroke: "black",
+      strokeWidth: 1,
+      name: "box"
+    });
+*/
+    var box = new Kinetic.Shape({
+      drawFunc: function() {
+        var context = this.getContext(),
+        x = rectX, y = rectY,
+        width = conf.width,
+        height = conf.height,
+        radius = 5;
+
+        /*context.shadowColor = "black";
+        context.shadowBlur=5;
+        context.shadowOffsetX=5;
+        context.shadowOffsetY=5;*/
+        //context.globalAlpha = 0.8;
+        context.beginPath();
+        this.applyLineJoin();
+        context.moveTo(x + radius, y);
+        context.lineTo(x + width - radius, y);
+        context.quadraticCurveTo(x + width, y, x + width, y + radius);
+        context.lineTo(x + width, y + height - radius);
+        context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        context.lineTo(x + radius, y + height);
+        context.quadraticCurveTo(x, y + height, x, y + height - radius);
+        context.lineTo(x, y + radius);
+        context.quadraticCurveTo(x, y, x + radius, y);
+        context.closePath();
+        //context.fill(grdW);
+        this.fillStroke();
+        context.shadowColor = "#242424";
+        context.shadowBlur = 10;
+        context.shadowOffsetX = 2;
+        context.shadowOffsetY = 2;
+        context.fill();
+      },
       fill: grd,
       stroke: "black",
       strokeWidth: 1,
