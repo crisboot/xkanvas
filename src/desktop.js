@@ -79,7 +79,7 @@ xk.mainBar = function(){
 		fontStyle: "normal"
 	});
 
-	var imageObj = new Image({draggable: true});
+	var imageObj = new Image();
 	imageObj.onload = function() {
 	  var image = new Kinetic.Image({
 		x: 5,
