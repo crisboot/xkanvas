@@ -109,6 +109,65 @@ xk.mainBar = function(){
 	this.bar.add(clockLabel);
     return this.bar;
 }
+//ShortCut
+xk.sicons = [];
+xk.scut = function(id,label,imgName, x, y){
+    var rectX = x, rectY = y;
+    var grp = new Kinetic.Group({draggable:true});
+    
+    var lbl = new Kinetic.Text({
+        x: rectX,
+        y: rectY+58,
+		text: label||"Icon title",
+		alpha: 0.9,
+		fontSize: 10,
+		fontFamily: "Arial",
+		textFill: "#d1d1d1",
+		padding: 10,
+		align: "left",
+		verticalAlign: "middle",
+		fontStyle: "bold"
+    });
+
+	var imageIcon = new Kinetic.Image({
+		x: rectX+14,
+		y: rectY,
+		width: 48,
+		height: 48,
+        name: id||"default",
+		ZIndex: 0
+    });
+
+    grp.add(lbl)
+    grp.add(imageIcon)
+
+	xk.desktopCon.add(grp);
+    
+	var imageObj = new Image();
+	imageObj.id = id||"default";
+    xk.sicons[imageObj.id] = imageObj;
+	imageObj.onload = function() {
+	  /*var image = new Kinetic.Image({
+		x: 15,
+		y: 85,
+		image: imageObj,
+		width: 48,
+		height: 48,
+		ZIndex: 0
+	  });*/
+      var image = xk.desktopCon.get("."+this.id)[0];
+	  image.setImage(xk.sicons[this.id]); 
+	  // add the shape to the layer
+	  //xk.desktopCon.add(image);
+	  xk.desktopCon.draw();
+	  // add the layer to the stage
+	  //xk.stage.add(layer);
+	}
+	imageObj.src = imgName || "./img/ico-xfce-terminal.png";
+
+	//xk.desktopCon.draw();
+    return grp;
+}
 
 //Namespace for apps
 xk.apps = {};

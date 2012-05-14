@@ -47,6 +47,7 @@ xk.getDocHeight = function() {
 xk.stage = {};
 xk.desktop = {};
 xk.desktopBar = {};
+xk.desktopCon = {};
 
 xk.init = function(o){
 	//TODO: add right click support: document.oncontextmenu = function(e) {alert("a"); return false;} 
@@ -69,7 +70,7 @@ xk.init = function(o){
 	//init apps
 	xk.apps.init();
 	
-	var imageObj = new Image({draggable: true});
+	/*var imageObj = new Image();
 	imageObj.onload = function() {
 	  var image = new Kinetic.Image({
 		x: 15,
@@ -85,8 +86,10 @@ xk.init = function(o){
 	  xk.desktopCon.draw();
 	  // add the layer to the stage
 	  //xk.stage.add(layer);
-	};
+	}
 	imageObj.src = "./img/ico-xfce-terminal.png";
+    */
+    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35);
 	/*
 	imageObj.on('click', function(){
 		var xWindow3 = new xk.window({rectX: 60,rectY: 270});

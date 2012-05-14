@@ -11,7 +11,7 @@
 * @license Released under GPL v2 License - http://www.gnu.org/licenses/gpl-2.0.html
 * @author Cristian Ariel Cortez  
 * @copyright (c) 2012 - 2014 Cristian Ariel Cortez - cortez[dot]cristian[at]gmail[dot]com - http://cortezcristian.com.ar/
-* @date May 12 2012
+* @date May 14 2012
 * @version 1.0
 * @requires KineticJS v3.9.4 or above - http://www.kineticjs.com/
 *
@@ -79,6 +79,7 @@ xk.getDocHeight = function() {
 xk.stage = {};
 xk.desktop = {};
 xk.desktopBar = {};
+xk.desktopCon = {};
 
 xk.init = function(o){
 	//TODO: add right click support: document.oncontextmenu = function(e) {alert("a"); return false;} 
@@ -101,7 +102,7 @@ xk.init = function(o){
 	//init apps
 	xk.apps.init();
 	
-	var imageObj = new Image({draggable: true});
+	/*var imageObj = new Image();
 	imageObj.onload = function() {
 	  var image = new Kinetic.Image({
 		x: 15,
@@ -117,8 +118,10 @@ xk.init = function(o){
 	  xk.desktopCon.draw();
 	  // add the layer to the stage
 	  //xk.stage.add(layer);
-	};
+	}
 	imageObj.src = "./img/ico-xfce-terminal.png";
+    */
+    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35);
 	/*
 	imageObj.on('click', function(){
 		var xWindow3 = new xk.window({rectX: 60,rectY: 270});
@@ -325,6 +328,65 @@ xk.mainBar = function(){
     this.bar.add(mainMenu);
 	this.bar.add(clockLabel);
     return this.bar;
+}
+//ShortCut
+xk.sicons = [];
+xk.scut = function(id,label,imgName, x, y){
+    var rectX = x, rectY = y;
+    var grp = new Kinetic.Group({draggable:true});
+    
+    var lbl = new Kinetic.Text({
+        x: rectX,
+        y: rectY+58,
+		text: label||"Icon title",
+		alpha: 0.9,
+		fontSize: 10,
+		fontFamily: "Arial",
+		textFill: "#d1d1d1",
+		padding: 10,
+		align: "left",
+		verticalAlign: "middle",
+		fontStyle: "bold"
+    });
+
+	var imageIcon = new Kinetic.Image({
+		x: rectX+14,
+		y: rectY,
+		width: 48,
+		height: 48,
+        name: id||"default",
+		ZIndex: 0
+    });
+
+    grp.add(lbl)
+    grp.add(imageIcon)
+
+	xk.desktopCon.add(grp);
+    
+	var imageObj = new Image();
+	imageObj.id = id||"default";
+    xk.sicons[imageObj.id] = imageObj;
+	imageObj.onload = function() {
+	  /*var image = new Kinetic.Image({
+		x: 15,
+		y: 85,
+		image: imageObj,
+		width: 48,
+		height: 48,
+		ZIndex: 0
+	  });*/
+      var image = xk.desktopCon.get("."+this.id)[0];
+	  image.setImage(xk.sicons[this.id]); 
+	  // add the shape to the layer
+	  //xk.desktopCon.add(image);
+	  xk.desktopCon.draw();
+	  // add the layer to the stage
+	  //xk.stage.add(layer);
+	}
+	imageObj.src = imgName || "./img/ico-xfce-terminal.png";
+
+	//xk.desktopCon.draw();
+    return grp;
 }
 
 //Namespace for apps
