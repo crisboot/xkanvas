@@ -89,7 +89,11 @@ xk.init = function(o){
 	}
 	imageObj.src = "./img/ico-xfce-terminal.png";
     */
-    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35);
+    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35, function(){
+        var xTerm = new xk.window({title: "crisboot@xkanvas: ~$", rectX:220});
+        xk.desktop.add(xTerm);
+        xk.desktop.draw();
+        });
 	/*
 	imageObj.on('click', function(){
 		var xWindow3 = new xk.window({rectX: 60,rectY: 270});

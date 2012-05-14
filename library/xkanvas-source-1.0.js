@@ -121,7 +121,11 @@ xk.init = function(o){
 	}
 	imageObj.src = "./img/ico-xfce-terminal.png";
     */
-    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35);
+    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35, function(){
+        var xTerm = new xk.window({title: "crisboot@xkanvas: ~$", rectX:220});
+        xk.desktop.add(xTerm);
+        xk.desktop.draw();
+        });
 	/*
 	imageObj.on('click', function(){
 		var xWindow3 = new xk.window({rectX: 60,rectY: 270});
@@ -331,7 +335,7 @@ xk.mainBar = function(){
 }
 //ShortCut
 xk.sicons = [];
-xk.scut = function(id,label,imgName, x, y){
+xk.scut = function(id,label,imgName, x, y, handler){
     var rectX = x, rectY = y;
     var grp = new Kinetic.Group({draggable:true});
     
@@ -358,8 +362,21 @@ xk.scut = function(id,label,imgName, x, y){
 		ZIndex: 0
     });
 
-    grp.add(lbl)
-    grp.add(imageIcon)
+    grp.add(lbl);
+    grp.add(imageIcon);
+    grp.on("mouseover", function() {
+          var layer = this.getLayer();
+          document.body.style.cursor = "pointer";
+          layer.draw();
+    });
+
+    grp.on("mouseout", function() {
+          var layer = this.getLayer();
+          document.body.style.cursor = "default";
+          layer.draw();
+    }); 
+
+    grp.on("click", handler || function(){});
 
 	xk.desktopCon.add(grp);
     
