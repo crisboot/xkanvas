@@ -109,6 +109,25 @@ xk.mainBar = function(){
 	this.bar.add(clockLabel);
     return this.bar;
 }
+//Menus
+var sMenu = {
+    label: "xkanvas",
+    name: "xkanvas",
+    icon: "./img/logo.png",
+    items: [{
+        //submenu: true,//fijarse si tiene items
+        label:"Application",
+        name: "xkanvas",
+        icon: "./img/logo.png",
+        items: [{
+            label:"Calculator",
+            name: "xkalc",
+            icon: "./img/logo.png",
+            onClick: function(){}
+        },{}]
+    },{
+    }]
+}
 //ShortCut
 xk.sicons = [];
 xk.scut = function(id,label,imgName, x, y, handler){
