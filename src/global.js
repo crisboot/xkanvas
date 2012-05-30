@@ -31,6 +31,8 @@ xk.override = function(obj1, obj2) {
     }
 }
 
+xk.log = function(a){try{console.log(a);} catch(e) {}};
+
 /*
 	http://james.padolsey.com/javascript/get-document-height-cross-browser/
 */

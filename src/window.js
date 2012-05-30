@@ -10,6 +10,24 @@ xk.window = function(o){
 
 xk.extend(xk.window, xk.con);
 */
+xk.trans = null; //transitions
+xk.transVal = ["linear",
+"ease-in",
+"ease-out",
+"ease-in-out",
+"back-ease-in",
+"back-ease-out",
+"back-ease-in-out",
+"elastic-ease-in",
+"elastic-ease-out",
+"elastic-ease-in-out",
+"bounce-ease-out",
+"bounce-ease-in",
+"bounce-ease-in-out",
+"strong-ease-in",
+"strong-ease-out",
+"strong-ease-in-out"];
+
 xk.window = function(o){ 
 	var conf = {
 		title: "Window Title",
@@ -143,10 +161,57 @@ xk.window = function(o){
 		xk.desktop.draw();
 	});
 	
-	this.grp.on("mousedown touchstart", function() {
+	this.grp.on("dragstart", function() {
+		if(xk.trans) {
+			xk.trans.stop();
+		}
 		this.moveToTop();
+		this.setAttrs({
+            shadow: {
+              offset: {
+                x: 15,
+                y: 15
+              }
+            },
+            scale: {
+              x: .99,
+              y: .9
+            }
+          });
+		/*fun
+		this.setAttrs({
+            shadow: {
+              offset: {
+                x: 15,
+                y: 15
+              }
+            },
+            scale: {
+              x: Math.random() * 1.2,
+              y: Math.random() * 1.2
+            }
+          });*/
 	});
+	
+	this.grp.on('dragend', function() {
+		var randomFX = xk.transVal[Math.floor(Math.random()*11)];
 
+		xk.log(randomFX);
+		xk.trans = this.transitionTo({
+            duration: 0.4,
+            easing: randomFX,
+            shadow: {
+              offset: {
+                x: 5,
+                y: 5
+              }
+            },
+            scale: {
+              x: 1,
+              y: 1
+            }
+         });
+	});
 	return this.grp;
 }
 

@@ -138,8 +138,11 @@ xk.btns.closeBtn.prototype = {
 		document.body.style.cursor = "default";
 		layer.draw();
 	},
-	onClick: function(){
+	onClick: function(e){
+		e.cancelBubble = true;
+		if (e.stopPropagation) e.stopPropagation();
 		//this.getParent().getParent().hide();
+		this.getParent().moveToBottom();
 		this.getParent().hide();
 		xk.desktop.draw();
 		//this.getParent().getParent().draw();

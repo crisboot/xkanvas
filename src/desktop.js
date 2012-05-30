@@ -16,6 +16,134 @@ xk.desktop.prototype = {
 		this.pane.add(win);
 	}
 }*/
+//Menus
+var sMenu = {
+    label: "xkanvas",
+    name: "xkanvas",
+    icon: "./img/logo.png",
+    items: [{
+        //submenu: true,//fijarse si tiene items
+        label:"Application",
+        name: "submenu1",
+        icon: "./img/logo.png",
+        items: [{
+            label:"Calculator",
+            name: "xkalc",
+            icon: "./img/logo.png",
+            onClick: function(){}
+        },{
+            label:"Console",
+            name: "xkonsole",
+            icon: "./img/logo.png",
+            onClick: function(){}
+        }]
+    },{
+        label:"Games",
+        name: "game",
+        icon: "./img/logo.png",
+		onClick: function(){}
+    },{
+        label:"About",
+        name: "about",
+        icon: "./img/logo.png",
+		onClick: function(){}
+    }]
+}
+
+xk.buildMakeItem = function(){
+	var item;
+	
+	return item;
+}
+
+xk.buildMainMenu = function(sMenu){
+	var mainMenu = new Kinetic.Group(), menuItems = new Kinetic.Group(), x = 20, y = 15, 
+	itemX = 0, itemY = 45, itemW = 120, itemH = 30;
+    
+	var xkLabel = new Kinetic.Text({
+		x: 20,
+		y: 15,
+		text: sMenu.label,
+		alpha: 0.9,
+		fontSize: 14,
+		fontFamily: "Arial",
+		textFill: "#d1d1d1",
+		padding: 15,
+		align: "left",
+		verticalAlign: "middle",
+		fontStyle: "normal"
+	});
+
+	var imageObj = new Image();
+	imageObj.onload = function() {
+	  var image = new Kinetic.Image({
+		x: 5,
+		y: 0,
+		image: imageObj,
+		width: 28,
+		height: 28,
+		ZIndex: 0
+	  });
+	  
+	  // add the shape to the layer
+	  mainMenu.add(image);
+	  xk.desktopBar.draw();
+	  //xk.desktopCon.draw();
+	  // add the layer to the stage
+	  //xk.stage.add(layer);
+	};
+	imageObj.src = sMenu.icon;
+    mainMenu.add(xkLabel);
+	
+	//Add menu items
+	for(var i=0; i<sMenu.items.length;i++){
+		//console.log(sMenu.items[i].label)
+		var itemLabel = new Kinetic.Text({
+			x: itemX,
+			y: (itemY+itemH*i),
+			text: sMenu.items[i].label,
+			alpha: 0.9,
+			fontSize: 12,
+			fontFamily: "Arial",
+			textFill: "#d1d1d1",
+			padding: 15,
+			align: "left",
+			verticalAlign: "middle",
+			fontStyle: "normal"
+		});
+		//menuItems.add(itemLabel);
+		if(typeof sMenu.items[i].items == "object"){
+			//submenu
+			for(var j=0; j<sMenu.items[i].items.length;j++){
+				//console.log(sMenu.items[i].items[j].label)
+				var itemLabel = new Kinetic.Text({
+					x: itemX+itemW,
+					y: (itemY+itemH*i+itemH*j),
+					text: sMenu.items[i].items[j].label,
+					alpha: 0.9,
+					fontSize: 12,
+					fontFamily: "Arial",
+					textFill: "#d1d1d1",
+					padding: 15,
+					align: "left",
+					verticalAlign: "middle",
+					fontStyle: "normal"
+				});
+				//menuItems.add(itemLabel);
+			}
+		}
+	}
+	
+	mainMenu.add(menuItems);
+	
+    mainMenu.on('click', function(){
+		debugger;
+        alert("show menu")
+    });
+	
+	return mainMenu;
+}
+
 xk.mainBar = function(){
 
     this.bar = new Kinetic.Group({
@@ -63,45 +191,7 @@ xk.mainBar = function(){
 		fontStyle: "normal"
 	});
 
-    var mainMenu = new Kinetic.Group();
-    
-	var xkLabel = new Kinetic.Text({
-		x: 20,
-		y: 15,
-		text: "xkanvas",
-		alpha: 0.9,
-		fontSize: 14,
-		fontFamily: "Arial",
-		textFill: "#d1d1d1",
-		padding: 15,
-		align: "left",
-		verticalAlign: "middle",
-		fontStyle: "normal"
-	});
-
-	var imageObj = new Image();
-	imageObj.onload = function() {
-	  var image = new Kinetic.Image({
-		x: 5,
-		y: 0,
-		image: imageObj,
-		width: 28,
-		height: 28,
-		ZIndex: 0
-	  });
-	  
-	  // add the shape to the layer
-	  mainMenu.add(image);
-	  xk.desktopBar.draw();
-	  //xk.desktopCon.draw();
-	  // add the layer to the stage
-	  //xk.stage.add(layer);
-	};
-	imageObj.src = "./img/logo.png";
-    mainMenu.add(xkLabel);
-    mainMenu.on('click', function(){
-        alert("show menu")
-    });
+    var mainMenu = xk.buildMainMenu(sMenu);
 
 
     this.bar.add(box);
@@ -109,25 +199,7 @@ xk.mainBar = function(){
 	this.bar.add(clockLabel);
     return this.bar;
 }
-//Menus
-var sMenu = {
-    label: "xkanvas",
-    name: "xkanvas",
-    icon: "./img/logo.png",
-    items: [{
-        //submenu: true,//fijarse si tiene items
-        label:"Application",
-        name: "xkanvas",
-        icon: "./img/logo.png",
-        items: [{
-            label:"Calculator",
-            name: "xkalc",
-            icon: "./img/logo.png",
-            onClick: function(){}
-        },{}]
-    },{
-    }]
-}
+
 //ShortCut
 xk.sicons = [];
 xk.scut = function(id,label,imgName, x, y, handler){
