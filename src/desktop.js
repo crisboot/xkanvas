@@ -245,6 +245,12 @@ xk.buildMainMenu = function(sMenu){
 				if(xk.desktopBar.get("."+this.subMenuName)[0].attrs.visible){
 					xk.desktopBar.get("."+this.subMenuName)[0].hide();
 				}else{
+					for(a in sMenu.items){
+						// console.log(sMenu.items[a]);
+						if(typeof sMenu.items[a].items == "object" && sMenu.items[a].subMenuName != this.subMenuName){
+							xk.desktopBar.get("."+sMenu.items[a].subMenuName)[0].hide();
+						}
+					}
 					xk.desktopBar.get("."+this.subMenuName)[0].show();
 				}
 			});
