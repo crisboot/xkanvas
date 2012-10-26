@@ -25,11 +25,11 @@ var sMenu = {
         //submenu: true,//fijarse si tiene items
         label:"Application",
         name: "submenu1",
-        icon: "./img/logo.png",
+        icon: "./img/ico-applications.png",
         items: [{
             label:"Calculator",
             name: "xkalc",
-            icon: "./img/logo.png",
+            icon: "./img/ico-calculator.png",
             onClick: function(){}
         },{
             label:"Console",
@@ -40,12 +40,12 @@ var sMenu = {
     },{
         label:"Games",
         name: "game",
-        icon: "./img/ico-xfce-terminal.png",
+        icon: "./img/ico-games.png",
 		onClick: function(){}
     },{
         label:"About",
         name: "about",
-        icon: "./img/ico-xfce-terminal.png",
+        icon: "./img/ico-about.png",
 		onClick: function(){}
     }]
 }
@@ -58,7 +58,8 @@ xk.buildMakeItem = function(){
 
 xk.buildMainMenu = function(sMenu){
 	var mainMenu = new Kinetic.Group(), menuItems = new Kinetic.Group(), x = 20, y = 15, 
-	itemX = 0, itemY = 45, itemW = 150, itemH = 30, itemBoxY = 30, itemBoxW = 150, itemBoxChildY = 30, itemImageObj=[];
+	itemX = 0, itemY = 45, itemW = 150, itemH = 30, itemBoxY = 30, itemBoxW = 150,
+	itemBoxChildY = 30, itemImageObj=[], itemChildImageObj=[];
     
 	var xkLabel = new Kinetic.Text({
 		x: 20,
@@ -122,41 +123,37 @@ xk.buildMainMenu = function(sMenu){
 			fontSize: 12,
 			fontFamily: "Arial",
 			textFill: "#d1d1d1",
-			padding: 15,
+			padding: 25,
 			align: "left",
 			verticalAlign: "middle",
 			fontStyle: "normal"
 		});
 		menuItems.add(itemBox);
 		menuItems.add(itemLabel);
-		var itemImageObj = new Image();
-		itemImageObj.onload = function() {	
-			var pos = 400;
-			for(var i in [1,2,3,4]){
-				var itemImage = new Kinetic.Image({
-					x: pos,
-					y: (itemY+itemH*i),
-					image: itemImageObj,
-					width: 28,
-					height: 28,
-					ZIndex: 0
-				});
-				console.dir(itemImage);
-				// add the shape to the layer
-				mainMenu.add(itemImage);
-				xk.desktopBar.draw();
-				//xk.desktopCon.draw();
-				// add the layer to the stage
-				//xk.stage.add(layer);
-				pos += 20;
-			}
+		itemImageObj[i] = new Image();
+		itemImageObj[i].orden = i;
+		itemImageObj[i].ordenX = itemX;
+		itemImageObj[i].ordenY = itemY+itemH*i;
+		itemImageObj[i].onload = function() {	
+			var itemImage = new Kinetic.Image({
+				x: this.ordenX+2,
+				y: this.ordenY-10,
+				image: itemImageObj[this.orden],
+				width: 20,
+				height: 20,
+				ZIndex: 0
+			});
+			// console.dir(itemImage);
+			// add the shape to the layer
+			mainMenu.add(itemImage);
+			xk.desktopBar.draw();
 		};
-		
-		console.log((itemY+itemH*i));
-		itemImageObj.src = sMenu.items[i].icon;
-		console.log(sMenu.items[i].icon);
+		itemImageObj[i].src = sMenu.items[i].icon;
+
 		itemBoxChildY += 30;
 		
+		//redefine array
+		itemChildImageObj[i] = [];
 		if(typeof sMenu.items[i].items == "object"){
 			//submenu
 			itemBoxChildY = itemBoxY;
@@ -182,13 +179,34 @@ xk.buildMainMenu = function(sMenu){
 					fontSize: 12,
 					fontFamily: "Arial",
 					textFill: "#d1d1d1",
-					padding: 15,
+					padding: 25,
 					align: "left",
 					verticalAlign: "middle",
 					fontStyle: "normal"
 				});
 				menuItems.add(itemBox);
 				menuItems.add(itemLabel);
+				itemChildImageObj[i][j] = new Image();
+				itemChildImageObj[i][j].ordenI = i;
+				itemChildImageObj[i][j].ordenJ = j;
+				itemChildImageObj[i][j].ordenX = itemX+itemW;
+				itemChildImageObj[i][j].ordenY = itemY+itemH*i+itemH*j;
+				itemChildImageObj[i][j].onload = function() {	
+					var itemImage = new Kinetic.Image({
+						x: this.ordenX+2,
+						y: this.ordenY-10,
+						image: itemChildImageObj[this.ordenI][this.ordenJ],
+						width: 20,
+						height: 20,
+						ZIndex: 0
+					});
+					//console.dir(itemImage);
+					// add the shape to the layer
+					mainMenu.add(itemImage);
+					xk.desktopBar.draw();
+				};
+				itemChildImageObj[i][j].src = sMenu.items[i].items[j].icon;
+				
 				
 				itemBoxChildY += 30;
 			}
