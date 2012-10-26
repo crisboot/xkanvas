@@ -11,7 +11,7 @@
 * @license Released under GPL v2 License - http://www.gnu.org/licenses/gpl-2.0.html
 * @author Cristian Ariel Cortez  
 * @copyright (c) 2012 - 2014 Cristian Ariel Cortez - cortez[dot]cristian[at]gmail[dot]com - http://cortezcristian.com.ar/
-* @date May 30 2012
+* @date Oct 26 2012
 * @version 1.0
 * @requires KineticJS v3.9.4 or above - http://www.kineticjs.com/
 *
@@ -260,18 +260,18 @@ var sMenu = {
         },{
             label:"Console",
             name: "xkonsole",
-            icon: "./img/logo.png",
+            icon: "./img/ico-xfce-terminal.png",
             onClick: function(){}
         }]
     },{
         label:"Games",
         name: "game",
-        icon: "./img/logo.png",
+        icon: "./img/ico-xfce-terminal.png",
 		onClick: function(){}
     },{
         label:"About",
         name: "about",
-        icon: "./img/logo.png",
+        icon: "./img/ico-xfce-terminal.png",
 		onClick: function(){}
     }]
 }
@@ -284,7 +284,7 @@ xk.buildMakeItem = function(){
 
 xk.buildMainMenu = function(sMenu){
 	var mainMenu = new Kinetic.Group(), menuItems = new Kinetic.Group(), x = 20, y = 15, 
-	itemX = 0, itemY = 45, itemW = 120, itemH = 30;
+	itemX = 0, itemY = 45, itemW = 150, itemH = 30, itemBoxY = 30, itemBoxW = 150, itemBoxChildY = 30, itemImageObj=[];
     
 	var xkLabel = new Kinetic.Text({
 		x: 20,
@@ -321,9 +321,25 @@ xk.buildMainMenu = function(sMenu){
 	imageObj.src = sMenu.icon;
     mainMenu.add(xkLabel);
 	
+	var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
+    grd.addColorStop(0, "#6d6b68");
+    grd.addColorStop(0.03, "#595854");
+    grd.addColorStop(0.1, "#3c3b37");
+	
 	//Add menu items
 	for(var i=0; i<sMenu.items.length;i++){
 		//console.log(sMenu.items[i].label)
+	
+		var itemBox = new Kinetic.Rect({
+		  x: itemX,
+		  y: (itemBoxY+itemH*i),
+		  width: itemBoxW,
+		  height: 30,
+		  fill: grd,
+		  stroke: "black",
+		  strokeWidth: 1,
+		  name: "topBar"
+		});
 		var itemLabel = new Kinetic.Text({
 			x: itemX,
 			y: (itemY+itemH*i),
@@ -337,11 +353,53 @@ xk.buildMainMenu = function(sMenu){
 			verticalAlign: "middle",
 			fontStyle: "normal"
 		});
-		//menuItems.add(itemLabel);
+		menuItems.add(itemBox);
+		menuItems.add(itemLabel);
+		var itemImageObj = new Image();
+		itemImageObj.onload = function() {	
+			var pos = 400;
+			for(var i in [1,2,3,4]){
+				var itemImage = new Kinetic.Image({
+					x: pos,
+					y: (itemY+itemH*i),
+					image: itemImageObj,
+					width: 28,
+					height: 28,
+					ZIndex: 0
+				});
+				console.dir(itemImage);
+				// add the shape to the layer
+				mainMenu.add(itemImage);
+				xk.desktopBar.draw();
+				//xk.desktopCon.draw();
+				// add the layer to the stage
+				//xk.stage.add(layer);
+				pos += 20;
+			}
+		};
+		
+		console.log((itemY+itemH*i));
+		itemImageObj.src = sMenu.items[i].icon;
+		console.log(sMenu.items[i].icon);
+		itemBoxChildY += 30;
+		
 		if(typeof sMenu.items[i].items == "object"){
 			//submenu
+			itemBoxChildY = itemBoxY;
 			for(var j=0; j<sMenu.items[i].items.length;j++){
 				//console.log(sMenu.items[i].items[j].label)
+				var itemBox = new Kinetic.Rect({
+				  x: itemX+itemBoxW,
+				  y: (itemBoxChildY+itemH*i),
+				  // y: (itemBoxChildY+itemH*i+itemH*j),
+				  width: itemBoxW,
+				  height: 30,
+				  fill: grd,
+				  stroke: "black",
+				  strokeWidth: 1,
+				  name: "topBar"
+				});
+				
 				var itemLabel = new Kinetic.Text({
 					x: itemX+itemW,
 					y: (itemY+itemH*i+itemH*j),
@@ -355,7 +413,10 @@ xk.buildMainMenu = function(sMenu){
 					verticalAlign: "middle",
 					fontStyle: "normal"
 				});
-				//menuItems.add(itemLabel);
+				menuItems.add(itemBox);
+				menuItems.add(itemLabel);
+				
+				itemBoxChildY += 30;
 			}
 		}
 	}
@@ -363,6 +424,11 @@ xk.buildMainMenu = function(sMenu){
 	mainMenu.add(menuItems);
 	
     mainMenu.on('click', function(){
+		console.log(this);
+		xk.buildMainMenu(sMenu);
+		for(i in sMenu.items){
+			console.log(sMenu.items[i]);
+		}
 		debugger;
         alert("show menu")
     });
