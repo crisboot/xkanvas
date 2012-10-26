@@ -251,8 +251,8 @@ var sMenu = {
         //submenu: true,//fijarse si tiene items
         label:"Application",
         name: "application",
-		subMenuName: "submenu1",
         icon: "./img/ico-applications.png",
+		subMenuName: "submenu1",
         items: [{
             label:"Calculator",
             name: "xkalc",
@@ -268,7 +268,18 @@ var sMenu = {
         label:"Games",
         name: "game",
         icon: "./img/ico-games.png",
-		onClick: function(){}
+		subMenuName: "submenu2",
+        items: [{
+            label:"Calculator 2",
+            name: "xkalc2",
+            icon: "./img/ico-calculator.png",
+            onClick: function(){}
+        },{
+            label:"Console 2",
+            name: "xkonsole2",
+            icon: "./img/ico-xfce-terminal.png",
+            onClick: function(){}
+        }]
     },{
         label:"About",
         name: "about",
@@ -294,7 +305,7 @@ xk.openMainMenu = function(){
 xk.buildMainMenu = function(sMenu){
 	var mainMenu = new Kinetic.Group(), menuItems = new Kinetic.Group({x:0, y:0, name: 'start-menu',visible: false}), x = 20, y = 15, 
 	itemX = 0, itemY = 45, itemW = 150, itemH = 30, itemBoxY = 30, itemBoxW = 150,
-	itemBoxChildY = 30, itemImageObj=[], itemChildImageObj=[];
+	itemBoxChildY = 30, itemImageObj=[], itemChildImageObj=[], subMenuItems=[];
     
 	var xkLabel = new Kinetic.Text({
 		x: 20,
@@ -367,7 +378,7 @@ xk.buildMainMenu = function(sMenu){
 			verticalAlign: "middle",
 			fontStyle: "normal"
 		});
-		console.dir(itemMenuLabel);
+		// console.dir(itemMenuLabel);
 		menuItems.add(itemBox);
 		menuItems.add(itemMenuLabel);
 		itemImageObj[i] = new Image();
@@ -396,7 +407,7 @@ xk.buildMainMenu = function(sMenu){
 		itemChildImageObj[i] = [];
 		if(typeof sMenu.items[i].items == "object"){
 			//submenu
-			var subMenuItems = new Kinetic.Group({name: sMenu.items[i].subMenuName,visible: false});
+			subMenuItems[i] = new Kinetic.Group({name: sMenu.items[i].subMenuName,visible: false});
 			itemMenuLabel.subMenuName = sMenu.items[i].subMenuName;
 			itemBoxChildY = itemBoxY;
 			for(var j=0; j<sMenu.items[i].items.length;j++){
@@ -426,8 +437,8 @@ xk.buildMainMenu = function(sMenu){
 					verticalAlign: "middle",
 					fontStyle: "normal"
 				});
-				subMenuItems.add(itemBox);
-				subMenuItems.add(itemLabel);
+				subMenuItems[i].add(itemBox);
+				subMenuItems[i].add(itemLabel);
 				itemChildImageObj[i][j] = new Image();
 				itemChildImageObj[i][j].ordenI = i;
 				itemChildImageObj[i][j].ordenJ = j;
@@ -442,9 +453,10 @@ xk.buildMainMenu = function(sMenu){
 						height: 20,
 						ZIndex: 0
 					});
-					//console.dir(itemImage);
+					console.dir(itemImage);
+					console.log(itemImage.attrs.y);
 					// add the shape to the layer
-					subMenuItems.add(itemImage);
+					subMenuItems[this.ordenI].add(itemImage);
 					xk.desktopBar.draw();
 				};
 				itemChildImageObj[i][j].src = sMenu.items[i].items[j].icon;
@@ -453,7 +465,7 @@ xk.buildMainMenu = function(sMenu){
 				itemBoxChildY += 30;
 			}
 			//add the submenu
-			menuItems.add(subMenuItems);
+			menuItems.add(subMenuItems[i]);
 			
 			itemMenuLabel.on('click', function() { 
 				if(xk.desktopBar.get("."+this.subMenuName)[0].attrs.visible){
@@ -463,7 +475,7 @@ xk.buildMainMenu = function(sMenu){
 				}
 			});
 			itemMenuLabel.on('mouseover', function() {
-				xk.desktopBar.get("."+this.subMenuName)[0].show();
+				// xk.desktopBar.get("."+this.subMenuName)[0].show();
 			});
 			itemMenuLabel.on('mouseout', function() {
 				// xk.desktopBar.get("."+this.subMenuName)[0].hide();
