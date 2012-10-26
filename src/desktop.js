@@ -236,6 +236,12 @@ xk.buildMainMenu = function(sMenu){
 					xk.desktopBar.get("."+this.subMenuName)[0].show();
 				}
 			});
+			itemMenuLabel.on('mouseover', function() {
+				xk.desktopBar.get("."+this.subMenuName)[0].show();
+			});
+			itemMenuLabel.on('mouseout', function() {
+				// xk.desktopBar.get("."+this.subMenuName)[0].hide();
+			});
 			// itemMenuLabel.on('mouseover', function() { alert("subme")
 				// //console.log(this.subMenuName);
 				// // console.log(sMenu.items[i].subMenuName);
