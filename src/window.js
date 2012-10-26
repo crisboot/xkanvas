@@ -162,6 +162,8 @@ xk.window = function(o){
 	});
 	
 	this.grp.on("dragstart", function() {
+		this.moveToTop();
+		/*
 		if(xk.trans) {
 			xk.trans.stop();
 		}
@@ -178,6 +180,7 @@ xk.window = function(o){
               y: .9
             }
           });
+		  */
 		/*fun
 		this.setAttrs({
             shadow: {
@@ -194,7 +197,7 @@ xk.window = function(o){
 	});
 	
 	this.grp.on('dragend', function() {
-		var randomFX = xk.transVal[Math.floor(Math.random()*11)];
+		/*var randomFX = xk.transVal[Math.floor(Math.random()*11)];
 
 		xk.log(randomFX);
 		xk.trans = this.transitionTo({
@@ -211,6 +214,7 @@ xk.window = function(o){
               y: 1
             }
          });
+		*/
 	});
 	return this.grp;
 }
