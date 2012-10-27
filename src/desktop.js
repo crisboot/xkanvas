@@ -373,7 +373,7 @@ xk.scut = function(id,label,imgName, x, y, handler){
     var grp = new Kinetic.Group({draggable:true});
     
     var lbl = new Kinetic.Text({
-        x: rectX,
+        x: rectX-4,
         y: rectY+58,
 		text: label||"Icon title",
 		alpha: 0.9,

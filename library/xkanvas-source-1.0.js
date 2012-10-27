@@ -123,8 +123,14 @@ xk.init = function(o){
 	}
 	imageObj.src = "./img/ico-xfce-terminal.png";
     */
-    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35, function(){
+	var xAccess = window.innerWidth || window.screen.width;
+    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", xAccess-120, 35, function(){
         var xTerm = new xk.window({title: "crisboot@xkanvas: ~$", rectX:220});
+        xk.desktop.add(xTerm);
+        xk.desktop.draw();
+        });
+	xk.scut("calculator","Calculator", "./img/ico-calculator.png", xAccess-120, 125, function(){
+        var xTerm = new xk.window({title: "Calculator", rectX:220});
         xk.desktop.add(xTerm);
         xk.desktop.draw();
         });
@@ -599,7 +605,7 @@ xk.scut = function(id,label,imgName, x, y, handler){
     var grp = new Kinetic.Group({draggable:true});
     
     var lbl = new Kinetic.Text({
-        x: rectX,
+        x: rectX-4,
         y: rectY+58,
 		text: label||"Icon title",
 		alpha: 0.9,

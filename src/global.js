@@ -91,8 +91,14 @@ xk.init = function(o){
 	}
 	imageObj.src = "./img/ico-xfce-terminal.png";
     */
-    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", 15, 35, function(){
+	var xAccess = window.innerWidth || window.screen.width;
+    xk.scut("terminal","Terminal", "./img/ico-xfce-terminal.png", xAccess-120, 35, function(){
         var xTerm = new xk.window({title: "crisboot@xkanvas: ~$", rectX:220});
+        xk.desktop.add(xTerm);
+        xk.desktop.draw();
+        });
+	xk.scut("calculator","Calculator", "./img/ico-calculator.png", xAccess-120, 125, function(){
+        var xTerm = new xk.window({title: "Calculator", rectX:220});
         xk.desktop.add(xTerm);
         xk.desktop.draw();
         });
