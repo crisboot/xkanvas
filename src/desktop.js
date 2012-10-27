@@ -121,9 +121,14 @@ xk.buildMainMenu = function(sMenu){
     mainMenu.add(xkLabel);
 	
 	var grd = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
-    grd.addColorStop(0, "#6d6b68");
-    grd.addColorStop(0.03, "#595854");
-    grd.addColorStop(0.1, "#3c3b37");
+    grd.addColorStop(0, "#3A3937");
+    grd.addColorStop(1, "#3c3b37");
+
+	var grdOrangered = xk.desktop.getContext().createLinearGradient(0, 0, 0, 200);
+    grdOrangered.addColorStop(0, "#F16C3A");
+    grdOrangered.addColorStop(0.1, "#EB5821");
+    grdOrangered.addColorStop(0.4, "#F84705");
+    grdOrangered.addColorStop(1, "#F87240");
 	
 	//Add menu items
 	for(var i=0; i<sMenu.items.length;i++){
@@ -135,10 +140,17 @@ xk.buildMainMenu = function(sMenu){
 		  width: itemBoxW,
 		  height: 30,
 		  fill: grd,
-		  stroke: "black",
-		  strokeWidth: 1,
-		  name: "topBar"
+		  //stroke: "black",
+		  //strokeWidth: 1,
+		  name: "menu-"+i
 		});
+        itemBox.on('mouseover', function(){
+            this.attrs.fill = grdOrangered;    
+        });
+        itemBox.on('mouseout', function(){
+            this.attrs.fill = "#3c3b37";    
+        });
+
 		var itemMenuLabel = new Kinetic.Text({
 			x: itemX+25,
 			y: (itemY+itemH*i),
@@ -150,7 +162,8 @@ xk.buildMainMenu = function(sMenu){
 			padding: 2,
 			align: "left",
 			verticalAlign: "middle",
-			fontStyle: "normal"
+			fontStyle: "normal",
+		    name: "menu-label-"+i
 		});
 		// console.dir(itemMenuLabel);
 		menuItems.add(itemBox);
@@ -183,20 +196,27 @@ xk.buildMainMenu = function(sMenu){
 			//submenu
 			subMenuItems[i] = new Kinetic.Group({name: sMenu.items[i].subMenuName,visible: false});
 			itemMenuLabel.subMenuName = sMenu.items[i].subMenuName;
+			itemBox.subMenuName = sMenu.items[i].subMenuName;
 			itemBoxChildY = itemBoxY;
 			for(var j=0; j<sMenu.items[i].items.length;j++){
 				//console.log(sMenu.items[i].items[j].label)
-				var itemBox = new Kinetic.Rect({
+				var itemBoxChild = new Kinetic.Rect({
 				  x: itemX+itemBoxW,
 				  y: (itemBoxChildY+itemH*i),
 				  // y: (itemBoxChildY+itemH*i+itemH*j),
 				  width: itemBoxW,
 				  height: 30,
 				  fill: grd,
-				  stroke: "black",
-				  strokeWidth: 1,
-				  name: "topBar"
+				  //stroke: "black",
+				  //strokeWidth: 1,
+				  name: "sub-menu-"+i+"-"+j
 				});
+                itemBoxChild.on('mouseover', function(){
+                    this.attrs.fill = grdOrangered;    
+                });
+                itemBoxChild.on('mouseout', function(){
+                    this.attrs.fill = "#3c3b37";    
+                });
 				
 				var itemLabel = new Kinetic.Text({
 					x: itemX+itemW+25,
@@ -211,7 +231,7 @@ xk.buildMainMenu = function(sMenu){
 					verticalAlign: "middle",
 					fontStyle: "normal"
 				});
-				subMenuItems[i].add(itemBox);
+				subMenuItems[i].add(itemBoxChild);
 				subMenuItems[i].add(itemLabel);
 				itemChildImageObj[i][j] = new Image();
 				itemChildImageObj[i][j].ordenI = i;
@@ -227,8 +247,8 @@ xk.buildMainMenu = function(sMenu){
 						height: 20,
 						ZIndex: 0
 					});
-					console.dir(itemImage);
-					console.log(itemImage.attrs.y);
+					//console.dir(itemImage);
+					//console.log(itemImage.attrs.y);
 					// add the shape to the layer
 					subMenuItems[this.ordenI].add(itemImage);
 					xk.desktopBar.draw();
@@ -252,6 +272,7 @@ xk.buildMainMenu = function(sMenu){
 						}
 					}
 					xk.desktopBar.get("."+this.subMenuName)[0].show();
+					xk.desktopBar.get("."+this.subMenuName)[0].moveToTop();
 				}
 			});
 			itemMenuLabel.on('mouseover', function() {
